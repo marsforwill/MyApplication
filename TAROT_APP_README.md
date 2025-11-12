@@ -40,31 +40,32 @@ entry/src/main/
 ### 1. 首页（Index.ets）
 
 - **功能**：
-  - 展示塔罗牌背面
-  - 点击卡牌随机抽取一张塔罗牌
-  - 显示卡牌名称和简要含义
-  - 提供"查看详情"和"重新抽牌"功能
+  - 输入占卜问题并选择牌阵（单张 / 三张 / 七张）
+  - 点击“开始占卜”后自动抽取对应数量的卡牌
+  - 展示抽牌结果摘要（问题、卡牌、位置说明）
+  - 提供“查看详情”跳转结果页，以及“重新占卜”功能
 
 - **状态管理**：
-  - `@State currentCard`: 当前抽中的卡牌
-  - `@State isCardFlipped`: 控制卡牌翻转动画
-  - `@State showCardInfo`: 控制信息显示动画
+  - `@State userQuestion`: 当前输入的问题
+  - `@State selectedSpread`: 选中的牌阵类型（`SpreadType` 枚举）
+  - `@State hasStartedReading`: 是否已经生成占卜结果
+  - `@State readingResult`: 本次占卜的完整结果（含卡牌、解读）
+  - `@State showCardInfo`: 控制结果信息淡入显示
 
 - **动画效果**：
-  - 卡牌翻转淡入淡出
-  - 文字信息渐显
-  - 按钮延迟显示
+  - 组件淡入淡出展示
+  - 查看详情 / 重新占卜按钮分阶段显现
 
 ### 2. 结果页（ResultPage.ets）
 
 - **功能**：
-  - 展示抽中卡牌的详细信息
-  - 显示卡牌完整描述
-  - 提供返回首页功能
+  - 展示完整的占卜问题、牌阵、牌位标签以及详细解读
+  - 支持三种牌阵布局：单张、三张（过去/现在/未来）、七张（完整展开）
+  - 在新逻辑下通过 `readingResult` 路由参数渲染，兼容旧版的 `cardId`
 
 - **路由参数**：
-  - 通过 `cardId` 传递卡牌ID
-  - 在 `aboutToAppear` 生命周期中获取参数
+  - `readingResult`：包含问题、牌阵类型、卡牌数组、文本解读
+  - 兼容 `cardId`：若旧版调用仅传 ID，则页面回退至单卡牌展示
 
 ### 3. 数据模型（TarotCard.ets）
 
@@ -84,7 +85,14 @@ entry/src/main/
   - 每张牌包含ID、名称、图片资源、简要描述和详细描述
 
 - **随机抽牌**：
-  - `drawRandomCard()` 函数使用 `Math.random()` 随机选择卡牌
+  - `drawMultipleCards()` 保证多次抽牌不重复
+  - 通过 `SpreadType` 区分单张、三张、七张牌阵
+
+- **占卜结果模型**：
+  - `ReadingResult`：统一封装问题、牌阵类型、抽到的牌、文本解读
+  - `DrawnCard`：描述单张牌及其在牌阵中的位置/含义标签
+  - `generate*Reading()`：针对不同牌阵生成 `ReadingResult`
+  - 解读函数会根据用户问题关键词给出个性化前言，并逐条拼接牌位分析
 
 ## UI 设计
 
@@ -118,6 +126,9 @@ entry/src/main/
 
 所有文本内容已配置在 `string.json` 中，支持国际化扩展。
 
+- 新增项：
+  - 问题输入提示文案、牌阵选项、错误提示等
+
 ### 颜色资源
 
 所有颜色值已配置在 `color.json` 中，便于主题切换。
@@ -146,6 +157,10 @@ entry/src/main/
    - 在 DevEco Studio 中点击运行按钮
    - 或使用 Preview 模式预览（部分功能可能受限）
 
+4. **体验占卜流程**：
+   - 输入问题 → 选择牌阵 → 点击“开始占卜”
+   - 首页即可查看抽牌结果摘要，点击“查看详情”跳转至结果页查看完整解读
+
 ### Preview 模式
 
 应用支持 DevEco Studio 的 Preview 模式，但需要注意：
@@ -169,12 +184,12 @@ entry/src/main/
 ### 3. 路由导航
 
 - 使用 `router.pushUrl` 进行页面跳转
-- 通过参数传递卡牌ID（避免传递复杂对象）
+- 结果页支持 `readingResult`（完整对象）与 `cardId`（兼容旧版）两种参数
 
 ### 4. 动画实现
 
 - 使用 `TransitionEffect` 实现过渡动画
-- 通过 `setTimeout` 控制动画时序
+- 通过淡入延迟控制组件出现时机
 
 ## 扩展建议
 
