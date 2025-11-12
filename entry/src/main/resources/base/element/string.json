@@ -1,0 +1,40 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "塔罗牌占卜应用"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "塔罗牌占卜应用入口"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "塔罗占卜"
+    },
+    {
+      "name": "app_title",
+      "value": "今日塔罗占卜"
+    },
+    {
+      "name": "tap_to_draw",
+      "value": "轻触卡牌开始占卜"
+    },
+    {
+      "name": "view_details",
+      "value": "查看详情"
+    },
+    {
+      "name": "draw_again",
+      "value": "重新抽牌"
+    },
+    {
+      "name": "back_to_home",
+      "value": "返回首页"
+    },
+    {
+      "name": "no_card_data",
+      "value": "未找到卡牌数据"
+    }
+  ]
+}
