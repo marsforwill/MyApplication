@@ -35,6 +35,46 @@
     {
       "name": "no_card_data",
       "value": "未找到卡牌数据"
+    },
+    {
+      "name": "enter_question",
+      "value": "请输入你的问题"
+    },
+    {
+      "name": "question_placeholder",
+      "value": "例如：我的感情会如何发展？"
+    },
+    {
+      "name": "select_spread",
+      "value": "选择牌阵"
+    },
+    {
+      "name": "spread_single",
+      "value": "单张牌"
+    },
+    {
+      "name": "spread_three",
+      "value": "三张牌（过去/现在/未来）"
+    },
+    {
+      "name": "spread_seven",
+      "value": "七张牌（完整占卜）"
+    },
+    {
+      "name": "start_reading",
+      "value": "开始占卜"
+    },
+    {
+      "name": "question_required",
+      "value": "请先输入问题"
+    },
+    {
+      "name": "spread_required",
+      "value": "请选择牌阵类型"
+    },
+    {
+      "name": "your_question",
+      "value": "你的问题"
     }
   ]
 }

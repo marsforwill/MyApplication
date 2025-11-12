@@ -9,6 +9,10 @@
       "value": "#1A0D2E"
     },
     {
+      "name": "background_secondary",
+      "value": "#2A1D3E"
+    },
+    {
       "name": "text_primary",
       "value": "#E8D5FF"
     },

@@ -172,11 +172,325 @@ export const TAROT_CARDS: TarotCard[] = [
 ];
 
 /**
- * 随机抽取一张塔罗牌
+ * 牌阵类型
+ */
+export enum SpreadType {
+  SINGLE = 1,    // 单张牌
+  THREE = 3,     // 三张牌
+  SEVEN = 7      // 七张牌
+}
+
+/**
+ * 牌阵位置含义（三张牌）
+ */
+export interface ThreeCardPosition {
+  position: 'past' | 'present' | 'future';
+  label: string;
+}
+
+/**
+ * 牌阵位置含义（七张牌）
+ */
+export interface SevenCardPosition {
+  position: 'situation' | 'challenge' | 'past' | 'future' | 'goal' | 'approach' | 'outcome';
+  label: string;
+}
+
+/**
+ * 抽中的卡牌及其位置信息
+ */
+export interface DrawnCard {
+  card: TarotCard;
+  position?: string;  // 位置标签（如"过去"、"现在"、"未来"等）
+  positionLabel?: string; // 位置说明
+}
+
+/**
+ * 占卜结果
+ */
+export interface ReadingResult {
+  question: string;           // 用户问题
+  spreadType: SpreadType;     // 牌阵类型
+  cards: DrawnCard[];         // 抽中的卡牌
+  interpretation: string;     // 个性化解读
+}
+
+/**
+ * 三张牌位置定义
+ */
+const THREE_CARD_POSITIONS: ThreeCardPosition[] = [
+  { position: 'past', label: '过去' },
+  { position: 'present', label: '现在' },
+  { position: 'future', label: '未来' }
+];
+
+/**
+ * 七张牌位置定义
+ */
+const SEVEN_CARD_POSITIONS: SevenCardPosition[] = [
+  { position: 'situation', label: '现状' },
+  { position: 'challenge', label: '挑战' },
+  { position: 'past', label: '过去' },
+  { position: 'future', label: '未来' },
+  { position: 'goal', label: '目标' },
+  { position: 'approach', label: '方法' },
+  { position: 'outcome', label: '结果' }
+];
+
+/**
+ * 随机抽取一张塔罗牌（不重复）
+ * @param drawnIds 已抽取的卡牌ID列表
  * @returns 随机选中的塔罗牌
  */
-export function drawRandomCard(): TarotCard {
-  const randomIndex = Math.floor(Math.random() * TAROT_CARDS.length);
-  return TAROT_CARDS[randomIndex];
+export function drawRandomCard(drawnIds: number[] = []): TarotCard {
+  const availableCards = TAROT_CARDS.filter(card => !drawnIds.includes(card.id));
+  if (availableCards.length === 0) {
+    // 如果所有牌都被抽过，重置
+    const randomIndex = Math.floor(Math.random() * TAROT_CARDS.length);
+    return TAROT_CARDS[randomIndex];
+  }
+  const randomIndex = Math.floor(Math.random() * availableCards.length);
+  return availableCards[randomIndex];
+}
+
+/**
+ * 抽取多张塔罗牌
+ * @param count 抽取数量
+ * @returns 抽中的卡牌数组
+ */
+export function drawMultipleCards(count: number): TarotCard[] {
+  const cards: TarotCard[] = [];
+  const drawnIds: number[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const card = drawRandomCard(drawnIds);
+    cards.push(card);
+    drawnIds.push(card.id);
+  }
+
+  return cards;
+}
+
+/**
+ * 生成三张牌占卜结果
+ * @param question 用户问题
+ * @param cards 抽中的三张牌
+ * @returns 占卜结果
+ */
+export function generateThreeCardReading(question: string, cards: TarotCard[]): ReadingResult {
+  const drawnCards: DrawnCard[] = cards.slice(0, THREE_CARD_POSITIONS.length).map((card, index): DrawnCard => {
+    const positionInfo = THREE_CARD_POSITIONS[index];
+    return {
+      card,
+      position: positionInfo.position,
+      positionLabel: positionInfo.label
+    };
+  });
+
+  // 生成个性化解读
+  const interpretation = generateThreeCardInterpretation(question, drawnCards);
+
+  return {
+    question: question,
+    spreadType: SpreadType.THREE,
+    cards: drawnCards,
+    interpretation: interpretation
+  };
+}
+
+/**
+ * 生成七张牌占卜结果
+ * @param question 用户问题
+ * @param cards 抽中的七张牌
+ * @returns 占卜结果
+ */
+export function generateSevenCardReading(question: string, cards: TarotCard[]): ReadingResult {
+  const drawnCards: DrawnCard[] = cards.slice(0, SEVEN_CARD_POSITIONS.length).map((card, index): DrawnCard => {
+    const positionInfo = SEVEN_CARD_POSITIONS[index];
+    return {
+      card,
+      position: positionInfo.position,
+      positionLabel: positionInfo.label
+    };
+  });
+
+  // 生成个性化解读
+  const interpretation = generateSevenCardInterpretation(question, drawnCards);
+
+  return {
+    question: question,
+    spreadType: SpreadType.SEVEN,
+    cards: drawnCards,
+    interpretation: interpretation
+  };
+}
+
+/**
+ * 生成单张牌占卜结果
+ * @param question 用户问题
+ * @param card 抽中的卡牌
+ * @returns 占卜结果
+ */
+export function generateSingleCardReading(question: string, card: TarotCard): ReadingResult {
+  const interpretation = generateSingleCardInterpretation(question, card);
+
+  return {
+    question: question,
+    spreadType: SpreadType.SINGLE,
+    cards: [{ card }],
+    interpretation: interpretation
+  };
+}
+
+/**
+ * 生成单张牌个性化解读
+ */
+function generateSingleCardInterpretation(question: string, card: TarotCard): string {
+  const cardName = card.name;
+  const cardDesc = card.fullDescription;
+
+  // 根据问题关键词生成个性化解读
+  const questionLower = question.toLowerCase();
+  let personalizedIntro = '';
+
+  if (questionLower.includes('爱情') || questionLower.includes('感情') || questionLower.includes('恋爱')) {
+    personalizedIntro = `关于你的感情问题，${cardName}为你带来了这样的指引：`;
+  } else if (questionLower.includes('工作') || questionLower.includes('事业') || questionLower.includes('职业')) {
+    personalizedIntro = `关于你的事业发展，${cardName}揭示了这样的信息：`;
+  } else if (questionLower.includes('学业') || questionLower.includes('学习') || questionLower.includes('考试')) {
+    personalizedIntro = `关于你的学业问题，${cardName}给出了这样的建议：`;
+  } else if (questionLower.includes('健康') || questionLower.includes('身体')) {
+    personalizedIntro = `关于你的健康状况，${cardName}提醒你：`;
+  } else if (questionLower.includes('财运') || questionLower.includes('金钱') || questionLower.includes('财务')) {
+    personalizedIntro = `关于你的财务状况，${cardName}预示了：`;
+  } else {
+    personalizedIntro = `关于你的问题"${question}"，${cardName}为你带来了这样的启示：`;
+  }
+
+  return `${personalizedIntro}\n\n${cardDesc}\n\n结合你提出的问题，这张牌提醒你要关注内心的声音，相信自己的直觉。答案往往就在你心中，只是需要静下心来去感受。`;
+}
+
+/**
+ * 生成三张牌个性化解读
+ */
+function generateThreeCardInterpretation(question: string, cards: DrawnCard[]): string {
+  const pastCard = cards.find(c => c.position === 'past')?.card;
+  const presentCard = cards.find(c => c.position === 'present')?.card;
+  const futureCard = cards.find(c => c.position === 'future')?.card;
+
+  if (!pastCard || !presentCard || !futureCard) {
+    return '解读生成错误';
+  }
+
+  const questionLower = question.toLowerCase();
+  let contextIntro = '';
+
+  if (questionLower.includes('爱情') || questionLower.includes('感情')) {
+    contextIntro = '关于你的感情问题，三张牌为你揭示了感情的发展轨迹：';
+  } else if (questionLower.includes('工作') || questionLower.includes('事业')) {
+    contextIntro = '关于你的事业发展，三张牌展现了事业的演变过程：';
+  } else if (questionLower.includes('学业') || questionLower.includes('学习')) {
+    contextIntro = '关于你的学业问题，三张牌描绘了学习的历程：';
+  } else {
+    contextIntro = `关于你的问题"${question}"，三张牌为你展现了时间线上的指引：`;
+  }
+
+  let interpretation = `${contextIntro}\n\n`;
+
+  // 过去
+  interpretation += `【过去 - ${pastCard.name}】\n`;
+  interpretation += `${pastCard.fullDescription}\n`;
+  interpretation += `这张牌反映了你过去的经历和基础，它为你现在的情况奠定了基础。\n\n`;
+
+  // 现在
+  interpretation += `【现在 - ${presentCard.name}】\n`;
+  interpretation += `${presentCard.fullDescription}\n`;
+  interpretation += `这是你当前所处的状态，需要你特别关注和把握。结合你的问题，这张牌提醒你要专注于当下。\n\n`;
+
+  // 未来
+  interpretation += `【未来 - ${futureCard.name}】\n`;
+  interpretation += `${futureCard.fullDescription}\n`;
+  interpretation += `这张牌预示了未来的可能走向。记住，未来并非完全确定，你的选择和行动会影响最终的结果。\n\n`;
+
+  // 综合解读
+  interpretation += `【综合解读】\n`;
+  interpretation += `从过去到未来，这三张牌形成了一个完整的故事。过去的影响仍在，现在的选择很重要，未来的方向已经显现。`;
+  interpretation += `关于"${question}"，塔罗牌建议你：回顾过去，把握现在，为未来做好准备。相信自己的判断，勇敢地向前迈进。`;
+
+  return interpretation;
+}
+
+/**
+ * 生成七张牌个性化解读
+ */
+function generateSevenCardInterpretation(question: string, cards: DrawnCard[]): string {
+  const situationCard = cards.find(c => c.position === 'situation')?.card;
+  const challengeCard = cards.find(c => c.position === 'challenge')?.card;
+  const pastCard = cards.find(c => c.position === 'past')?.card;
+  const futureCard = cards.find(c => c.position === 'future')?.card;
+  const goalCard = cards.find(c => c.position === 'goal')?.card;
+  const approachCard = cards.find(c => c.position === 'approach')?.card;
+  const outcomeCard = cards.find(c => c.position === 'outcome')?.card;
+
+  if (!situationCard || !challengeCard || !pastCard || !futureCard || !goalCard || !approachCard || !outcomeCard) {
+    return '解读生成错误';
+  }
+
+  const questionLower = question.toLowerCase();
+  let contextIntro = '';
+
+  if (questionLower.includes('爱情') || questionLower.includes('感情')) {
+    contextIntro = '关于你的感情问题，七张牌为你提供了全面的指引：';
+  } else if (questionLower.includes('工作') || questionLower.includes('事业')) {
+    contextIntro = '关于你的事业发展，七张牌为你揭示了完整的图景：';
+  } else {
+    contextIntro = `关于你的问题"${question}"，七张牌为你展开了详细的占卜：`;
+  }
+
+  let interpretation = `${contextIntro}\n\n`;
+
+  // 现状
+  interpretation += `【现状 - ${situationCard.name}】\n`;
+  interpretation += `${situationCard.fullDescription}\n`;
+  interpretation += `这是你当前面临的情况，是理解整个问题的起点。\n\n`;
+
+  // 挑战
+  interpretation += `【挑战 - ${challengeCard.name}】\n`;
+  interpretation += `${challengeCard.fullDescription}\n`;
+  interpretation += `这是你需要面对的障碍或困难，了解它有助于你更好地应对。\n\n`;
+
+  // 过去
+  interpretation += `【过去 - ${pastCard.name}】\n`;
+  interpretation += `${pastCard.fullDescription}\n`;
+  interpretation += `过去的影响仍在发挥作用，理解过去有助于理解现在。\n\n`;
+
+  // 未来
+  interpretation += `【未来 - ${futureCard.name}】\n`;
+  interpretation += `${futureCard.fullDescription}\n`;
+  interpretation += `这是未来可能的发展方向，为你提供了前瞻性的指引。\n\n`;
+
+  // 目标
+  interpretation += `【目标 - ${goalCard.name}】\n`;
+  interpretation += `${goalCard.fullDescription}\n`;
+  interpretation += `这是你应该追求的目标或理想状态，为你指明了方向。\n\n`;
+
+  // 方法
+  interpretation += `【方法 - ${approachCard.name}】\n`;
+  interpretation += `${approachCard.fullDescription}\n`;
+  interpretation += `这是你应采取的方法或态度，帮助你达成目标。\n\n`;
+
+  // 结果
+  interpretation += `【结果 - ${outcomeCard.name}】\n`;
+  interpretation += `${outcomeCard.fullDescription}\n`;
+  interpretation += `这是最终可能的结果，记住结果会受到你行动的影响。\n\n`;
+
+  // 综合解读
+  interpretation += `【综合解读】\n`;
+  interpretation += `关于"${question}"，这七张牌为你描绘了一幅完整的画面。`;
+  interpretation += `现状揭示了起点，挑战提醒你注意障碍，过去提供了背景，未来指明了方向。`;
+  interpretation += `目标是你应该追求的，方法是你的行动指南，结果则是可能达成的状态。`;
+  interpretation += `综合这些信息，塔罗牌建议你：认清现状，直面挑战，从过去中学习，为未来做准备，明确目标，采取正确的方法，最终达成理想的结果。`;
+
+  return interpretation;
 }
 
