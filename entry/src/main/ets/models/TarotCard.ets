@@ -255,7 +255,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 22,
     name: "权杖一",
-    image: getCardImage({id:22, name:"权杖一", type: CardType.MINOR, suit: Suit.WANDS, number:1}),
+    image: $r('app.media.card_wands_01'),
     description: "新开始，创造力，灵感，行动",
     fullDescription: "权杖一代表着新的开始和创造力的迸发。这是一个充满能量和热情的时期，新的想法和项目正在萌芽。抓住这个机会，将你的灵感转化为行动。这是开始新项目、追求新目标的绝佳时机，相信你的直觉，勇敢地迈出第一步。",
     type: CardType.MINOR,
@@ -265,7 +265,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 23,
     name: "权杖二",
-    image: getCardImage({id:23, name:"权杖二", type: CardType.MINOR, suit: Suit.WANDS, number:2}),
+    image: $r('app.media.card_wands_02'),
     description: "规划，选择，未来展望，等待",
     fullDescription: "权杖二代表着规划和未来展望。你正在考虑未来的方向，需要做出重要的选择。虽然你拥有资源和能力，但现在需要仔细规划。评估你的选择，考虑长期目标，不要急于行动，等待合适的时机。",
     type: CardType.MINOR,
@@ -275,7 +275,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 24,
     name: "权杖三",
-    image: getCardImage({id:24, name:"权杖三", type: CardType.MINOR, suit: Suit.WANDS, number:3}),
+    image: $r('app.media.card_wands_03'),
     description: "探索，远见，领导力，扩张",
     fullDescription: "权杖三代表着探索和远见。你已经建立了基础，现在可以展望更广阔的未来。这是一个扩张和探索的时期，你的领导力正在显现。保持远见，继续前进，你的努力将带来更大的成功和认可。",
     type: CardType.MINOR,
@@ -285,7 +285,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 25,
     name: "权杖四",
-    image: getCardImage({id:25, name:"权杖四", type: CardType.MINOR, suit: Suit.WANDS, number:4}),
+    image: $r('app.media.card_wands_04'),
     description: "庆祝，稳定，和谐，成就",
     fullDescription: "权杖四代表着庆祝和稳定。你取得了阶段性的成就，现在是庆祝和享受成果的时候。这是一个和谐稳定的时期，你的努力得到了回报。与家人朋友分享你的成功，享受这个充满喜悦和满足的时刻。",
     type: CardType.MINOR,
@@ -295,7 +295,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 26,
     name: "权杖五",
-    image: getCardImage({id:26, name:"权杖五", type: CardType.MINOR, suit: Suit.WANDS, number:5}),
+    image: $r('app.media.card_wands_05'),
     description: "竞争，冲突，挑战，成长",
     fullDescription: "权杖五代表着竞争和冲突。你可能面临挑战或竞争，但这也是成长的机会。通过面对这些挑战，你会变得更强大。不要害怕冲突，将其视为学习和成长的机会，保持你的立场，但也要保持开放的心态。",
     type: CardType.MINOR,
@@ -305,7 +305,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 27,
     name: "权杖六",
-    image: getCardImage({id:27, name:"权杖六", type: CardType.MINOR, suit: Suit.WANDS, number:6}),
+    image: $r('app.media.card_wands_06'),
     description: "胜利，成功，认可，前进",
     fullDescription: "权杖六代表着胜利和成功。你的努力得到了认可，你正在朝着目标前进。这是一个充满自信和成就感的时期。继续前进，保持你的优势，你的成功会激励他人，也会为你带来更多的机会。",
     type: CardType.MINOR,
@@ -315,7 +315,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 28,
     name: "权杖七",
-    image: getCardImage({id:28, name:"权杖七", type: CardType.MINOR, suit: Suit.WANDS, number:7}),
+    image: $r('app.media.card_wands_07'),
     description: "挑战，防御，坚持，勇气",
     fullDescription: "权杖七代表着挑战和坚持。你可能面临挑战或反对，但你有能力应对。保持你的立场，坚持你的信念，不要轻易放弃。这是考验你决心和勇气的时刻，相信自己的能力，勇敢地面对挑战。",
     type: CardType.MINOR,
@@ -325,7 +325,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 29,
     name: "权杖八",
-    image: getCardImage({id:29, name:"权杖八", type: CardType.MINOR, suit: Suit.WANDS, number:8}),
+    image: $r('app.media.card_wands_08'),
     description: "快速行动，进展，速度，变化",
     fullDescription: "权杖八代表着快速行动和进展。事情正在快速推进，变化来得很快。这是一个充满动力的时期，你的计划正在迅速实现。保持灵活，适应快速的变化，抓住机会，不要让犹豫阻碍你的前进。",
     type: CardType.MINOR,
@@ -335,7 +335,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 30,
     name: "权杖九",
-    image: getCardImage({id:30, name:"权杖九", type: CardType.MINOR, suit: Suit.WANDS, number:9}),
+    image: $r('app.media.card_wands_09'),
     description: "坚持，韧性，最后努力，耐力",
     fullDescription: "权杖九代表着坚持和韧性。你已经走了很长的路，虽然疲惫，但仍在坚持。这是最后的努力阶段，不要放弃。你已经付出了很多，胜利就在眼前。保持你的决心，运用你的经验，继续前进。",
     type: CardType.MINOR,
@@ -345,7 +345,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 31,
     name: "权杖十",
-    image: getCardImage({id:31, name:"权杖十", type: CardType.MINOR, suit: Suit.WANDS, number:10}),
+    image: $r('app.media.card_wands_10'),
     description: "负担，责任，压力，完成",
     fullDescription: "权杖十代表着负担和责任。你可能承担了过多的责任，感到压力很大。虽然你接近完成，但负担很重。考虑分担责任，不要独自承担一切。你已经很接近目标了，但需要找到平衡，避免过度劳累。",
     type: CardType.MINOR,
@@ -356,7 +356,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 32,
     name: "权杖侍从",
-    image: getCardImage({id:32, name:"权杖侍从", type: CardType.MINOR, suit: Suit.WANDS, courtRank: "侍从"}),
+    image: $r('app.media.card_wands_page'),
     description: "新消息，探索，热情，学习",
     fullDescription: "权杖侍从代表着新消息和探索精神。你可能收到关于新机会或新项目的消息，或者你正在探索新的可能性。保持开放和热情，愿意学习和尝试新事物。这是一个充满好奇心和探索精神的时期。",
     type: CardType.MINOR,
@@ -366,7 +366,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 33,
     name: "权杖骑士",
-    image: getCardImage({id:33, name:"权杖骑士", type: CardType.MINOR, suit: Suit.WANDS, courtRank: "骑士"}),
+    image: $r('app.media.card_wands_knight'),
     description: "行动，冒险，冲动，追求",
     fullDescription: "权杖骑士代表着行动和冒险。你充满能量和热情，准备采取行动。这是一个追求目标和冒险的时期，但要注意不要过于冲动。保持你的热情，但也要有计划和策略，避免鲁莽行事。",
     type: CardType.MINOR,
@@ -376,7 +376,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 34,
     name: "权杖皇后",
-    image: getCardImage({id:34, name:"权杖皇后", type: CardType.MINOR, suit: Suit.WANDS, courtRank: "皇后"}),
+    image: $r('app.media.card_wands_queen'),
     description: "自信，独立，创造力，热情",
     fullDescription: "权杖皇后代表着自信和独立。你是一个充满创造力和热情的人，拥有强烈的独立精神。你能够激励他人，用自己的方式实现目标。保持你的自信和热情，继续追求你的梦想，你的能量会感染周围的人。",
     type: CardType.MINOR,
@@ -386,7 +386,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 35,
     name: "权杖国王",
-    image: getCardImage({id:35, name:"权杖国王", type: CardType.MINOR, suit: Suit.WANDS, courtRank: "国王"}),
+    image: $r('app.media.card_wands_king'),
     description: "领导力，远见，创业精神，成就",
     fullDescription: "权杖国王代表着领导力和远见。你是一个天生的领导者，拥有远见和创业精神。你能够激励团队，实现宏伟的目标。运用你的领导力和经验，继续追求更大的成就，你的远见和决心会带来成功。",
     type: CardType.MINOR,
@@ -399,7 +399,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 36,
     name: "圣杯一",
-    image: getCardImage({id:36, name:"圣杯一", type: CardType.MINOR, suit: Suit.CUPS, number:1}),
+    image: $r('app.media.card_cups_01'),
     description: "新感情，情感开始，直觉，爱",
     fullDescription: "圣杯一代表着新的情感开始。这可能意味着新的感情、友谊或情感连接。你的心是开放的，情感正在流动。这是一个充满爱和情感满足的时期，相信你的直觉，让情感自然地流动。",
     type: CardType.MINOR,
@@ -409,7 +409,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 37,
     name: "圣杯二",
-    image: getCardImage({id:37, name:"圣杯二", type: CardType.MINOR, suit: Suit.CUPS, number:2}),
+    image: $r('app.media.card_cups_02'),
     description: "伙伴关系，爱情，合作，平衡",
     fullDescription: "圣杯二代表着伙伴关系和爱情。这可能意味着一段新的关系或现有关系的深化。这是一种平等、和谐和相互支持的关系。珍惜这种连接，通过合作和沟通来加深关系，保持平衡和相互尊重。",
     type: CardType.MINOR,
@@ -419,7 +419,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 38,
     name: "圣杯三",
-    image: getCardImage({id:38, name:"圣杯三", type: CardType.MINOR, suit: Suit.CUPS, number:3}),
+    image: $r('app.media.card_cups_03'),
     description: "友谊，庆祝，社交，快乐",
     fullDescription: "圣杯三代表着友谊和庆祝。这是一个充满快乐和社交活动的时期，你与朋友和同事的关系很好。享受这些美好的时光，庆祝你的成就，与重要的人分享快乐。这是建立和加强社交联系的绝佳时机。",
     type: CardType.MINOR,
@@ -429,7 +429,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 39,
     name: "圣杯四",
-    image: getCardImage({id:39, name:"圣杯四", type: CardType.MINOR, suit: Suit.CUPS, number:4}),
+    image: $r('app.media.card_cups_04'),
     description: "沉思，不满，机会，内省",
     fullDescription: "圣杯四代表着沉思和内省。你可能对现状感到不满，正在思考新的可能性。虽然有机会出现，但你可能在犹豫。花时间反思你的真正需求，不要错过新的机会，但也要确保它符合你的价值观。",
     type: CardType.MINOR,
@@ -439,7 +439,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 40,
     name: "圣杯五",
-    image: getCardImage({id:40, name:"圣杯五", type: CardType.MINOR, suit: Suit.CUPS, number:5}),
+    image: $r('app.media.card_cups_05'),
     description: "失落，悲伤，遗憾，接受",
     fullDescription: "圣杯五代表着失落和悲伤。你可能因为失去某些东西而感到悲伤，但不要忘记你仍然拥有的。虽然你专注于失去的，但还有希望和机会在身边。接受这些情感，但也要看到仍然存在的可能性。",
     type: CardType.MINOR,
@@ -449,7 +449,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 41,
     name: "圣杯六",
-    image: getCardImage({id:41, name:"圣杯六", type: CardType.MINOR, suit: Suit.CUPS, number:6}),
+    image: $r('app.media.card_cups_06'),
     description: "回忆，童年，纯真，给予",
     fullDescription: "圣杯六代表着回忆和纯真。这可能与过去的美好回忆有关，或者你正在给予他人帮助和支持。这是一个充满温暖和关怀的时期，珍惜这些美好的回忆，也愿意给予他人帮助。",
     type: CardType.MINOR,
@@ -459,7 +459,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 42,
     name: "圣杯七",
-    image: getCardImage({id:42, name:"圣杯七", type: CardType.MINOR, suit: Suit.CUPS, number:7}),
+    image: $r('app.media.card_cups_07'),
     description: "幻想，选择，梦想，现实",
     fullDescription: "圣杯七代表着幻想和选择。你可能有很多梦想和选择，但需要区分幻想和现实。虽然有很多可能性，但你需要做出实际的选择。审视你的选择，确定哪些是真正可行的，哪些只是幻想。",
     type: CardType.MINOR,
@@ -469,7 +469,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 43,
     name: "圣杯八",
-    image: getCardImage({id:43, name:"圣杯八", type: CardType.MINOR, suit: Suit.CUPS, number:8}),
+    image: $r('app.media.card_cups_08'),
     description: "离开，寻找，放弃，追求",
     fullDescription: "圣杯八代表着离开和寻找。你可能正在离开不再满足你的情况，去寻找更深层的意义。虽然离开可能困难，但这是为了追求更高的目标。相信你的直觉，勇敢地离开舒适区，追求真正让你满足的东西。",
     type: CardType.MINOR,
@@ -479,7 +479,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 44,
     name: "圣杯九",
-    image: getCardImage({id:44, name:"圣杯九", type: CardType.MINOR, suit: Suit.CUPS, number:9}),
+    image: $r('app.media.card_cups_09'),
     description: "满足，愿望实现，快乐，成就",
     fullDescription: "圣杯九代表着满足和愿望实现。你的情感需求得到了满足，你感到快乐和满足。这是一个充满成就感和情感满足的时期。享受这个美好的时刻，你的愿望正在实现，继续追求让你快乐的事物。",
     type: CardType.MINOR,
@@ -489,7 +489,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 45,
     name: "圣杯十",
-    image: getCardImage({id:45, name:"圣杯十", type: CardType.MINOR, suit: Suit.CUPS, number:10}),
+    image: $r('app.media.card_cups_10'),
     description: "家庭幸福，情感满足，和谐，圆满",
     fullDescription: "圣杯十代表着家庭幸福和情感满足。这是一个充满爱、和谐和满足的时期，你的情感生活非常圆满。与家人和爱人分享这些美好的时光，珍惜这些珍贵的连接，这是情感生活的最高境界。",
     type: CardType.MINOR,
@@ -500,7 +500,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 46,
     name: "圣杯侍从",
-    image: getCardImage({id:46, name:"圣杯侍从", type: CardType.MINOR, suit: Suit.CUPS, courtRank: "侍从"}),
+    image: $r('app.media.card_cups_page'),
     description: "情感消息，直觉，纯真，新开始",
     fullDescription: "圣杯侍从代表着情感消息和直觉。你可能收到关于感情或情感方面的消息，或者你正在发展新的情感连接。相信你的直觉，保持开放和纯真的心，新的情感机会正在出现。",
     type: CardType.MINOR,
@@ -510,7 +510,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 47,
     name: "圣杯骑士",
-    image: getCardImage({id:47, name:"圣杯骑士", type: CardType.MINOR, suit: Suit.CUPS, courtRank: "骑士"}),
+    image: $r('app.media.card_cups_knight'),
     description: "浪漫，追求，理想主义，情感",
     fullDescription: "圣杯骑士代表着浪漫和追求。你可能正在追求一段浪漫的关系，或者你是一个理想主义和浪漫的人。你充满情感和热情，愿意为爱情和理想付出。保持你的理想主义，但也要保持现实，追求真正的情感连接。",
     type: CardType.MINOR,
@@ -520,7 +520,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 48,
     name: "圣杯皇后",
-    image: getCardImage({id:48, name:"圣杯皇后", type: CardType.MINOR, suit: Suit.CUPS, courtRank: "皇后"}),
+    image: $r('app.media.card_cups_queen'),
     description: "直觉，同情，情感智慧，关怀",
     fullDescription: "圣杯皇后代表着直觉和情感智慧。你拥有强大的直觉和同情心，能够理解和关怀他人。你是一个情感丰富和智慧的人，能够为他人提供情感支持。运用你的直觉和同情心，继续为他人提供支持和关怀。",
     type: CardType.MINOR,
@@ -530,7 +530,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 49,
     name: "圣杯国王",
-    image: getCardImage({id:49, name:"圣杯国王", type: CardType.MINOR, suit: Suit.CUPS, courtRank: "国王"}),
+    image: $r('app.media.card_cups_king'),
     description: "情感成熟，同情，支持，智慧",
     fullDescription: "圣杯国王代表着情感成熟和智慧。你是一个情感成熟和智慧的人，能够为他人提供支持和指导。你拥有强大的直觉和同情心，能够理解和支持他人的情感需求。运用你的情感智慧，继续为他人提供支持和指导。",
     type: CardType.MINOR,
@@ -543,7 +543,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 50,
     name: "宝剑一",
-    image: getCardImage({id:50, name:"宝剑一", type: CardType.MINOR, suit: Suit.SWORDS, number:1}),
+    image: $r('app.media.card_swords_01'),
     description: "新想法，清晰，突破，真理",
     fullDescription: "宝剑一代表着新想法和清晰。一个新的想法或洞察正在出现，带来了清晰和突破。这是一个充满智慧和清晰思维的时期。运用你的智慧，追求真理，这个新的想法可能会带来重要的突破。",
     type: CardType.MINOR,
@@ -553,7 +553,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 51,
     name: "宝剑二",
-    image: getCardImage({id:51, name:"宝剑二", type: CardType.MINOR, suit: Suit.SWORDS, number:2}),
+    image: $r('app.media.card_swords_02'),
     description: "选择，犹豫，平衡，决定",
     fullDescription: "宝剑二代表着选择和犹豫。你可能面临一个重要的决定，正在权衡不同的选择。虽然你感到犹豫，但需要做出决定。仔细考虑你的选择，但不要过度分析，相信你的判断，做出决定。",
     type: CardType.MINOR,
@@ -563,7 +563,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 52,
     name: "宝剑三",
-    image: getCardImage({id:52, name:"宝剑三", type: CardType.MINOR, suit: Suit.SWORDS, number:3}),
+    image: $r('app.media.card_swords_03'),
     description: "心痛，悲伤，失落，接受",
     fullDescription: "宝剑三代表着心痛和悲伤。你可能正在经历情感上的痛苦或失落，感到心痛。虽然这很痛苦，但这是成长的一部分。允许自己感受这些情感，接受痛苦，但也要知道这会过去，你会变得更强大。",
     type: CardType.MINOR,
@@ -573,7 +573,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 53,
     name: "宝剑四",
-    image: getCardImage({id:53, name:"宝剑四", type: CardType.MINOR, suit: Suit.SWORDS, number:4}),
+    image: $r('app.media.card_swords_04'),
     description: "休息，恢复，内省，暂停",
     fullDescription: "宝剑四代表着休息和恢复。你可能需要暂停和休息，从冲突或压力中恢复。这是一个内省和恢复的时期。给自己时间休息和恢复，通过内省来找到内心的平静，为未来的行动做好准备。",
     type: CardType.MINOR,
@@ -583,7 +583,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 54,
     name: "宝剑五",
-    image: getCardImage({id:54, name:"宝剑五", type: CardType.MINOR, suit: Suit.SWORDS, number:5}),
+    image: $r('app.media.card_swords_05'),
     description: "冲突，竞争，分歧，损失",
     fullDescription: "宝剑五代表着冲突和竞争。你可能卷入冲突或竞争，可能有分歧和损失。虽然你可能在冲突中获胜，但代价可能很高。考虑冲突的后果，寻找和平解决的方法，避免不必要的争斗。",
     type: CardType.MINOR,
@@ -593,7 +593,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 55,
     name: "宝剑六",
-    image: getCardImage({id:55, name:"宝剑六", type: CardType.MINOR, suit: Suit.SWORDS, number:6}),
+    image: $r('app.media.card_swords_06'),
     description: "过渡，离开，寻求帮助，希望",
     fullDescription: "宝剑六代表着过渡和离开。你可能正在离开困难的情况，寻求更好的未来。虽然过程可能困难，但有希望。接受帮助，相信你会找到更好的地方，这个过渡会带来积极的变化。",
     type: CardType.MINOR,
@@ -603,7 +603,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 56,
     name: "宝剑七",
-    image: getCardImage({id:56, name:"宝剑七", type: CardType.MINOR, suit: Suit.SWORDS, number:7}),
+    image: $r('app.media.card_swords_07'),
     description: "欺骗，策略，秘密，风险",
     fullDescription: "宝剑七代表着欺骗和策略。可能有欺骗或秘密的行为，或者你需要使用策略。但要小心，欺骗可能会带来风险。保持诚实，使用正当的策略，避免欺骗和秘密行为，诚实会带来更好的结果。",
     type: CardType.MINOR,
@@ -613,7 +613,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 57,
     name: "宝剑八",
-    image: getCardImage({id:57, name:"宝剑八", type: CardType.MINOR, suit: Suit.SWORDS, number:8}),
+    image: $r('app.media.card_swords_08'),
     description: "束缚，限制，自我限制，解放",
     fullDescription: "宝剑八代表着束缚和限制。你可能感到被束缚或限制，但这些限制可能是自我强加的。你拥有解放自己的能力。审视你的限制，认识到很多限制是自我强加的，你有能力打破这些束缚。",
     type: CardType.MINOR,
@@ -623,7 +623,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 58,
     name: "宝剑九",
-    image: getCardImage({id:58, name:"宝剑九", type: CardType.MINOR, suit: Suit.SWORDS, number:9}),
+    image: $r('app.media.card_swords_09'),
     description: "焦虑，噩梦，恐惧，担忧",
     fullDescription: "宝剑九代表着焦虑和恐惧。你可能被焦虑、恐惧或担忧所困扰，感到痛苦。这些恐惧可能是过度的或非理性的。面对你的恐惧，寻求支持，认识到很多担忧是过度的，你有能力克服这些恐惧。",
     type: CardType.MINOR,
@@ -633,7 +633,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 59,
     name: "宝剑十",
-    image: getCardImage({id:59, name:"宝剑十", type: CardType.MINOR, suit: Suit.SWORDS, number:10}),
+    image: $r('app.media.card_swords_10'),
     description: "结束，痛苦，释放，新开始",
     fullDescription: "宝剑十代表着结束和痛苦。一个困难的时期即将结束，虽然痛苦，但这是必要的结束。痛苦会过去，新的开始即将到来。接受这个结束，释放痛苦，为新的开始做好准备，黎明就在眼前。",
     type: CardType.MINOR,
@@ -644,7 +644,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 60,
     name: "宝剑侍从",
-    image: getCardImage({id:60, name:"宝剑侍从", type: CardType.MINOR, suit: Suit.SWORDS, courtRank: "侍从"}),
+    image: $r('app.media.card_swords_page'),
     description: "新想法，好奇心，学习，消息",
     fullDescription: "宝剑侍从代表着新想法和好奇心。你可能收到新的消息或想法，或者你正在学习新事物。保持好奇心和开放的心态，这个新的想法或消息可能会带来重要的洞察。",
     type: CardType.MINOR,
@@ -654,7 +654,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 61,
     name: "宝剑骑士",
-    image: getCardImage({id:61, name:"宝剑骑士", type: CardType.MINOR, suit: Suit.SWORDS, courtRank: "骑士"}),
+    image: $r('app.media.card_swords_knight'),
     description: "行动，冲动，直接，追求",
     fullDescription: "宝剑骑士代表着行动和直接。你充满能量，准备采取行动，但可能过于冲动。你追求目标时很直接，但要注意不要过于鲁莽。保持你的热情，但也要有策略，避免冲动行事。",
     type: CardType.MINOR,
@@ -664,7 +664,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 62,
     name: "宝剑皇后",
-    image: getCardImage({id:62, name:"宝剑皇后", type: CardType.MINOR, suit: Suit.SWORDS, courtRank: "皇后"}),
+    image: $r('app.media.card_swords_queen'),
     description: "清晰，独立，诚实，智慧",
     fullDescription: "宝剑皇后代表着清晰和独立。你是一个独立、诚实和智慧的人，拥有清晰的思维。你能够客观地看待事物，做出明智的决定。运用你的智慧和清晰思维，继续追求真理和独立。",
     type: CardType.MINOR,
@@ -674,7 +674,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 63,
     name: "宝剑国王",
-    image: getCardImage({id:63, name:"宝剑国王", type: CardType.MINOR, suit: Suit.SWORDS, courtRank: "国王"}),
+    image: $r('app.media.card_swords_king'),
     description: "权威，真理，公正，领导力",
     fullDescription: "宝剑国王代表着权威和真理。你是一个公正、智慧和权威的领导者，追求真理和公正。你能够做出明智的决定，为他人提供指导。运用你的智慧和权威，继续追求真理和公正，为他人树立榜样。",
     type: CardType.MINOR,
@@ -687,7 +687,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 64,
     name: "星币一",
-    image: getCardImage({id:64, name:"星币一", type: CardType.MINOR, suit: Suit.PENTACLES, number:1}),
+    image: $r('app.media.card_pentacles_01'),
     description: "新机会，物质开始，潜力，投资",
     fullDescription: "星币一代表着新的物质机会。一个新的财务或工作机会正在出现，带来了物质上的潜力。这是一个投资和开始的绝佳时机。抓住这个机会，明智地投资你的时间和资源，这个新的开始会带来物质上的回报。",
     type: CardType.MINOR,
@@ -697,7 +697,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 65,
     name: "星币二",
-    image: getCardImage({id:65, name:"星币二", type: CardType.MINOR, suit: Suit.PENTACLES, number:2}),
+    image: $r('app.media.card_pentacles_02'),
     description: "平衡，优先事项，资源管理，选择",
     fullDescription: "星币二代表着平衡和资源管理。你可能需要在不同的优先事项之间找到平衡，管理你的资源。虽然你有多项任务，但需要找到平衡。仔细管理你的资源，确定优先事项，找到工作和生活的平衡。",
     type: CardType.MINOR,
@@ -707,7 +707,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 66,
     name: "星币三",
-    image: getCardImage({id:66, name:"星币三", type: CardType.MINOR, suit: Suit.PENTACLES, number:3}),
+    image: $r('app.media.card_pentacles_03'),
     description: "合作，技能，学习，团队",
     fullDescription: "星币三代表着合作和技能。你可能正在与团队合作，学习新技能，或者你的技能得到了认可。这是一个合作和学习的时期。继续发展你的技能，与团队合作，你的努力会得到认可和回报。",
     type: CardType.MINOR,
@@ -717,7 +717,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 67,
     name: "星币四",
-    image: getCardImage({id:67, name:"星币四", type: CardType.MINOR, suit: Suit.PENTACLES, number:4}),
+    image: $r('app.media.card_pentacles_04'),
     description: "安全，控制，保守，稳定",
     fullDescription: "星币四代表着安全和稳定。你可能在财务或物质方面感到安全，但可能过于保守和控制。虽然稳定是好的，但也要保持灵活性。找到安全感和开放之间的平衡，不要过于保守，也要愿意分享和投资。",
     type: CardType.MINOR,
@@ -727,7 +727,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 68,
     name: "星币五",
-    image: getCardImage({id:68, name:"星币五", type: CardType.MINOR, suit: Suit.PENTACLES, number:5}),
+    image: $r('app.media.card_pentacles_05'),
     description: "财务困难，孤立，贫困，支持",
     fullDescription: "星币五代表着财务困难。你可能面临财务或物质上的困难，感到孤立。虽然困难，但仍有希望和支持。寻求帮助，不要独自承担，困难是暂时的，通过努力和支持，你会度过这个困难时期。",
     type: CardType.MINOR,
@@ -737,7 +737,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 69,
     name: "星币六",
-    image: getCardImage({id:69, name:"星币六", type: CardType.MINOR, suit: Suit.PENTACLES, number:6}),
+    image: $r('app.media.card_pentacles_06'),
     description: "给予，分享，平衡，慷慨",
     fullDescription: "星币六代表着给予和分享。你可能在给予或接受帮助，分享资源，或者你拥有足够的资源来帮助他人。这是一个平衡和慷慨的时期。如果你有能力，慷慨地帮助他人；如果你需要帮助，不要害怕接受。",
     type: CardType.MINOR,
@@ -747,7 +747,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 70,
     name: "星币七",
-    image: getCardImage({id:70, name:"星币七", type: CardType.MINOR, suit: Suit.PENTACLES, number:7}),
+    image: $r('app.media.card_pentacles_07'),
     description: "评估，规划，耐心，投资",
     fullDescription: "星币七代表着评估和规划。你可能正在评估你的进展，规划未来，或者你的投资正在成长。这是一个需要耐心的时期。继续你的努力，保持耐心，你的投资和努力会带来回报，但要继续规划和评估。",
     type: CardType.MINOR,
@@ -757,7 +757,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 71,
     name: "星币八",
-    image: getCardImage({id:71, name:"星币八", type: CardType.MINOR, suit: Suit.PENTACLES, number:8}),
+    image: $r('app.media.card_pentacles_08'),
     description: "技能，努力，专注，进步",
     fullDescription: "星币八代表着技能和努力。你正在通过努力和专注来发展技能，取得进步。这是一个需要持续努力的时期。继续专注于你的工作，发展你的技能，你的努力会带来长期的回报和成功。",
     type: CardType.MINOR,
@@ -767,7 +767,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 72,
     name: "星币九",
-    image: getCardImage({id:72, name:"星币九", type: CardType.MINOR, suit: Suit.PENTACLES, number:9}),
+    image: $r('app.media.card_pentacles_09'),
     description: "独立，自给自足，享受，成就",
     fullDescription: "星币九代表着独立和自给自足。你已经取得了物质上的成功，能够自给自足，享受你的成就。这是一个充满满足和独立的时期。享受你的成就，但也要保持谦逊，继续努力，你的成功会带来更多的机会。",
     type: CardType.MINOR,
@@ -777,7 +777,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 73,
     name: "星币十",
-    image: getCardImage({id:73, name:"星币十", type: CardType.MINOR, suit: Suit.PENTACLES, number:10}),
+    image: $r('app.media.card_pentacles_10'),
     description: "财富，家庭，稳定，传承",
     fullDescription: "星币十代表着财富和家庭稳定。你可能在财务上非常成功，家庭稳定，或者你正在建立长期的财富和传承。这是一个充满物质满足和家庭幸福的时期。珍惜你的财富和家庭，继续建立稳定的基础，为未来做准备。",
     type: CardType.MINOR,
@@ -788,7 +788,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 74,
     name: "星币侍从",
-    image: getCardImage({id:74, name:"星币侍从", type: CardType.MINOR, suit: Suit.PENTACLES, courtRank: "侍从"}),
+    image: $r('app.media.card_pentacles_page'),
     description: "学习，机会，潜力，新开始",
     fullDescription: "星币侍从代表着学习和新机会。你可能正在学习新技能，或者一个新的工作或财务机会正在出现。这是一个充满潜力的时期。抓住学习的机会，发展你的技能，这个新的开始会带来物质上的回报。",
     type: CardType.MINOR,
@@ -798,7 +798,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 75,
     name: "星币骑士",
-    image: getCardImage({id:75, name:"星币骑士", type: CardType.MINOR, suit: Suit.PENTACLES, courtRank: "骑士"}),
+    image: $r('app.media.card_pentacles_01'),
     description: "努力，责任，稳定，追求",
     fullDescription: "星币骑士代表着努力和责任。你正在努力工作，承担责任，追求物质上的稳定和成功。这是一个需要持续努力的时期。保持你的努力和责任感，继续追求你的目标，你的坚持会带来成功。",
     type: CardType.MINOR,
@@ -808,7 +808,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 76,
     name: "星币皇后",
-    image: getCardImage({id:76, name:"星币皇后", type: CardType.MINOR, suit: Suit.PENTACLES, courtRank: "皇后"}),
+    image: $r('app.media.card_pentacles_queen'),
     description: "实用，慷慨，稳定，关怀",
     fullDescription: "星币皇后代表着实用和慷慨。你是一个实用、慷慨和稳定的人，能够管理资源，关怀他人。你拥有物质上的安全感，也愿意分享。运用你的实用智慧和慷慨，继续为他人提供支持和关怀。",
     type: CardType.MINOR,
@@ -818,7 +818,7 @@ export const TAROT_CARDS: TarotCard[] = [
   {
     id: 77,
     name: "星币国王",
-    image: getCardImage({id:77, name:"星币国王", type: CardType.MINOR, suit: Suit.PENTACLES, courtRank: "国王"}),
+    image: $r('app.media.card_pentacles_king'),
     description: "成功，稳定，领导力，财富",
     fullDescription: "星币国王代表着成功和稳定。你是一个成功、稳定和富有的领导者，拥有物质上的成就和智慧。你能够管理资源，为他人提供支持和指导。运用你的成功和智慧，继续建立稳定的基础，为他人树立榜样。",
     type: CardType.MINOR,
