@@ -1,5 +1,13 @@
 import { router } from '@kit.ArkUI';
-import { SpreadType, ReadingResult, DrawnCard, drawMultipleCards, generateSingleCardReading, generateThreeCardReading, generateSevenCardReading } from '../models/TarotCard';
+import {
+  SpreadType,
+  ReadingResult,
+  DrawnCard,
+  drawMultipleCards,
+  generateSingleCardReading,
+  generateThreeCardReading,
+  generateSevenCardReading
+} from '../models/TarotCard';
 
 /**
  * 首页组件
@@ -18,6 +26,7 @@ struct Index {
   @State readingResult: ReadingResult | null = null;
   // 是否显示卡牌信息（用于淡入动画）
   @State showCardInfo: boolean = false;
+  @State flippedCardIds: number[] = [];
 
   /**
    * 开始占卜
@@ -36,6 +45,7 @@ struct Index {
     // 重置状态
     this.hasStartedReading = true;
     this.showCardInfo = false;
+    this.flippedCardIds = [];
 
     // 根据牌阵类型抽取卡牌
     let result: ReadingResult;
@@ -64,7 +74,19 @@ struct Index {
     this.hasStartedReading = false;
     this.readingResult = null;
     this.showCardInfo = false;
+    this.flippedCardIds = [];
     // 保留问题和牌阵选择
+  }
+
+  handleCardFlip(cardId: number) {
+    if (this.flippedCardIds.includes(cardId)) {
+      return;
+    }
+    this.flippedCardIds = [...this.flippedCardIds, cardId];
+  }
+
+  isCardFlipped(cardId: number): boolean {
+    return this.flippedCardIds.includes(cardId);
   }
 
   build() {
@@ -143,7 +165,8 @@ struct Index {
         }
         .width('100%')
         .height(50)
-        .backgroundColor(this.selectedSpread === SpreadType.SINGLE ? $r('app.color.button_primary') : $r('app.color.background_secondary'))
+        .backgroundColor(this.selectedSpread === SpreadType.SINGLE ? $r('app.color.button_primary') :
+          $r('app.color.background_secondary'))
         .borderRadius(12)
         .justifyContent(FlexAlign.Center)
         .margin({ bottom: 12 })
@@ -159,7 +182,8 @@ struct Index {
         }
         .width('100%')
         .height(50)
-        .backgroundColor(this.selectedSpread === SpreadType.THREE ? $r('app.color.button_primary') : $r('app.color.background_secondary'))
+        .backgroundColor(this.selectedSpread === SpreadType.THREE ? $r('app.color.button_primary') :
+          $r('app.color.background_secondary'))
         .borderRadius(12)
         .justifyContent(FlexAlign.Center)
         .margin({ bottom: 12 })
@@ -175,7 +199,8 @@ struct Index {
         }
         .width('100%')
         .height(50)
-        .backgroundColor(this.selectedSpread === SpreadType.SEVEN ? $r('app.color.button_primary') : $r('app.color.background_secondary'))
+        .backgroundColor(this.selectedSpread === SpreadType.SEVEN ? $r('app.color.button_primary') :
+          $r('app.color.background_secondary'))
         .borderRadius(12)
         .justifyContent(FlexAlign.Center)
         .onClick(() => {
@@ -297,20 +322,9 @@ struct Index {
   @Builder
   buildSingleCardSection(card: DrawnCard) {
     Column() {
-      Image(card.card.image)
-        .width(220)
-        .height(350)
-        .borderRadius(18)
-        .shadow({
-          radius: 25,
-          color: $r('app.color.card_shadow'),
-          offsetX: 0,
-          offsetY: 15
-        })
-        .opacity(this.showCardInfo ? 1 : 0)
-        .transition(TransitionEffect.OPACITY.animation({ duration: 400, curve: Curve.EaseInOut }))
+      this.buildFlipCard(card, 220, 350, 18, true, this.isCardFlipped(card.card.id))
 
-      if (this.showCardInfo) {
+      if (this.showCardInfo && this.isCardFlipped(card.card.id)) {
         Text(card.card.name)
           .fontSize(24)
           .fontWeight(FontWeight.Bold)
@@ -347,14 +361,9 @@ struct Index {
   @Builder
   buildThreeCardItem(card: DrawnCard) {
     Column() {
-      Image(card.card.image)
-        .width(110)
-        .height(176)
-        .borderRadius(12)
-        .opacity(this.showCardInfo ? 1 : 0)
-        .transition(TransitionEffect.OPACITY.animation({ duration: 400, curve: Curve.EaseInOut }))
+      this.buildFlipCard(card, 110, 176, 12, false, this.isCardFlipped(card.card.id))
 
-      if (this.showCardInfo) {
+      if (this.showCardInfo && this.isCardFlipped(card.card.id)) {
         Text(card.positionLabel || '')
           .fontSize(12)
           .fontColor($r('app.color.text_hint'))
@@ -413,14 +422,9 @@ struct Index {
   @Builder
   buildSevenCardItem(card: DrawnCard) {
     Column() {
-      Image(card.card.image)
-        .width(96)
-        .height(154)
-        .borderRadius(10)
-        .opacity(this.showCardInfo ? 1 : 0)
-        .transition(TransitionEffect.OPACITY.animation({ duration: 400, curve: Curve.EaseInOut }))
+      this.buildFlipCard(card, 96, 154, 10, false, this.isCardFlipped(card.card.id))
 
-      if (this.showCardInfo) {
+      if (this.showCardInfo && this.isCardFlipped(card.card.id)) {
         Text(card.positionLabel || '')
           .fontSize(10)
           .fontColor($r('app.color.text_hint'))
@@ -438,5 +442,51 @@ struct Index {
       }
     }
     .width(96)
+  }
+
+  @Builder
+  buildFlipCard(card: DrawnCard, width: number, height: number, borderRadius: number = 12, showShadow: boolean = false,
+    flipped: boolean = false) {
+    Stack() {
+      Image($r('app.media.card_back'))
+        .width(width)
+        .height(height)
+        .borderRadius(borderRadius)
+        .opacity(flipped ? 0 : 1)
+        .transition(TransitionEffect.OPACITY.animation({ duration: 200, curve: Curve.EaseInOut }))
+
+      Image(card.card.image)
+        .width(width)
+        .height(height)
+        .borderRadius(borderRadius)
+        .opacity(flipped ? 1 : 0)
+        .transition(TransitionEffect.OPACITY.animation({ duration: 200, curve: Curve.EaseInOut }))
+    }
+    .width(width)
+    .height(height)
+    .borderRadius(borderRadius)
+    .shadow(showShadow ? {
+      radius: 25,
+      color: $r('app.color.card_shadow'),
+      offsetX: 0,
+      offsetY: 15
+    } : {
+      radius: 0,
+      color: Color.Transparent,
+      offsetX: 0,
+      offsetY: 0
+    })
+    .scale({ x: flipped ? 1 : 0.96, y: flipped ? 1 : 0.96, z: 1 })
+    .opacity(this.showCardInfo ? 1 : 0)
+    .transition(TransitionEffect.OPACITY.animation({ duration: 400, curve: Curve.EaseInOut }))
+    .animation({ duration: 350, curve: Curve.EaseInOut })
+    .onClick(() => {
+      if (!this.showCardInfo || flipped) {
+        return;
+      }
+      animateTo({ duration: 350, curve: Curve.EaseInOut }, () => {
+        this.handleCardFlip(card.card.id);
+      })
+    })
   }
 }
