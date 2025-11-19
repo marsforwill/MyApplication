@@ -90,30 +90,41 @@ struct Index {
   }
 
   build() {
-    Scroll() {
-      Column() {
-        // 应用标题
-        Text($r('app.string.app_title'))
-          .fontSize(28)
-          .fontWeight(FontWeight.Bold)
-          .fontColor($r('app.color.text_primary'))
-          .margin({ top: 40, bottom: 30 })
-          .opacity(0.95)
+    Stack() {
+      // 背景图片 - 使用 Image 组件确保正确显示
+      Image($r('app.media.background'))
+        .width('100%')
+        .height('100%')
+        .objectFit(ImageFit.Cover)
+        .alt($r('app.media.background'))
 
-        if (!this.hasStartedReading) {
-          // 问题输入和牌阵选择界面
-          this.buildQuestionInput()
-        } else if (this.readingResult) {
-          // 占卜结果界面
-          this.buildReadingResult(this.readingResult)
+      // 内容层
+      Scroll() {
+        Column() {
+          // 应用标题
+          Text($r('app.string.app_title'))
+            .fontSize(28)
+            .fontWeight(FontWeight.Bold)
+            .fontColor($r('app.color.text_primary'))
+            .margin({ top: 40, bottom: 30 })
+            .opacity(0.95)
+
+          if (!this.hasStartedReading) {
+            // 问题输入和牌阵选择界面
+            this.buildQuestionInput()
+          } else if (this.readingResult) {
+            // 占卜结果界面
+            this.buildReadingResult(this.readingResult)
+          }
         }
+        .width('100%')
+        .padding({ left: 20, right: 20, bottom: 40 })
       }
       .width('100%')
-      .padding({ left: 20, right: 20, bottom: 40 })
+      .height('100%')
     }
     .width('100%')
     .height('100%')
-    .backgroundColor($r('app.color.background_primary'))
   }
 
   /**
@@ -452,15 +463,17 @@ struct Index {
         .width(width)
         .height(height)
         .borderRadius(borderRadius)
-        .opacity(flipped ? 0 : 1)
-        .transition(TransitionEffect.OPACITY.animation({ duration: 200, curve: Curve.EaseInOut }))
+        .opacity((this.showCardInfo ? 1 : 0) * (flipped ? 0 : 1))
+        .rotate({ x: 0, y: 1, z: 0, angle: flipped ? 180 : 0 })
+        .animation({ duration: 280, curve: Curve.EaseInOut })
 
       Image(card.card.image)
         .width(width)
         .height(height)
         .borderRadius(borderRadius)
-        .opacity(flipped ? 1 : 0)
-        .transition(TransitionEffect.OPACITY.animation({ duration: 200, curve: Curve.EaseInOut }))
+        .opacity((this.showCardInfo ? 1 : 0) * (flipped ? 1 : 0))
+        .rotate({ x: 0, y: 1, z: 0, angle: flipped ? 0 : -180 })
+        .animation({ duration: 280, curve: Curve.EaseInOut })
     }
     .width(width)
     .height(height)
@@ -479,12 +492,11 @@ struct Index {
     .scale({ x: flipped ? 1 : 0.96, y: flipped ? 1 : 0.96, z: 1 })
     .opacity(this.showCardInfo ? 1 : 0)
     .transition(TransitionEffect.OPACITY.animation({ duration: 400, curve: Curve.EaseInOut }))
-    .animation({ duration: 350, curve: Curve.EaseInOut })
     .onClick(() => {
       if (!this.showCardInfo || flipped) {
         return;
       }
-      animateTo({ duration: 350, curve: Curve.EaseInOut }, () => {
+      animateTo({ duration: 300, curve: Curve.EaseInOut }, () => {
         this.handleCardFlip(card.card.id);
       })
     })
