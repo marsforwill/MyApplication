@@ -75,6 +75,26 @@
     {
       "name": "your_question",
       "value": "你的问题"
+    },
+    {
+      "name": "card_library_title",
+      "value": "塔罗牌图鉴"
+    },
+    {
+      "name": "card_library_subtitle",
+      "value": "点击任意一张牌，查看详细牌义与解读"
+    },
+    {
+      "name": "card_library_search_placeholder",
+      "value": "输入牌名或关键词搜索塔罗牌"
+    },
+    {
+      "name": "goto_card_library",
+      "value": "查看所有塔罗牌含义"
+    },
+    {
+      "name": "card_library_empty",
+      "value": "未找到匹配的塔罗牌，请尝试修改搜索关键词。"
     }
   ]
 }

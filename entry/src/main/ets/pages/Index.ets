@@ -221,6 +221,22 @@ struct Index {
       .width('100%')
       .margin({ bottom: 30 })
 
+      // 查看所有塔罗牌按钮
+      Button($r('app.string.goto_card_library'))
+        .type(ButtonType.Normal)
+        .backgroundColor($r('app.color.button_secondary'))
+        .fontColor($r('app.color.text_primary'))
+        .fontSize(14)
+        .width('100%')
+        .height(44)
+        .borderRadius(22)
+        .margin({ top: 4, bottom: 8 })
+        .onClick(() => {
+          router.pushUrl({
+            url: 'pages/CardLibrary'
+          });
+        })
+
       // 开始占卜按钮
       Button($r('app.string.start_reading'))
         .type(ButtonType.Normal)
