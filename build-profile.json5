@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "storeFile": "C:/Users/shiminliu/Desktop/hongmenpass.p12",
+          "storePassword": "0000001A0C9D79A7DB21BF0D2D0FBD63472F812C6A527F926CA13DA99143B58F8FF586185EDB66234AD8",
+          "keyAlias": "marsKey",
+          "keyPassword": "0000001A6781930111F0CD426582E66254C21E0E501DA47065FD33B9B637F5D550E218871D1CD1E86687",
+          "signAlg": "SHA256withECDSA",
+          "profile": "C:/Users/shiminliu/Desktop/塔罗profileRelease.p7b",
+          "certpath": "C:/Users/shiminliu/Desktop/发布证书.cer"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
