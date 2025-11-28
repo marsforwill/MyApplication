@@ -6,7 +6,9 @@ import {
   drawMultipleCards,
   generateSingleCardReading,
   generateThreeCardReading,
-  generateSevenCardReading
+  generateSevenCardReading,
+  TAROT_CARDS,
+  TarotCard
 } from '../models/TarotCard';
 
 /**
@@ -27,6 +29,41 @@ struct Index {
   // 是否显示卡牌信息（用于淡入动画）
   @State showCardInfo: boolean = false;
   @State flippedCardIds: number[] = [];
+
+  // 每日运势相关
+  @StorageLink('dailyCardDate') dailyCardDate: string = '';
+  @StorageLink('dailyCardId') dailyCardId: number = -1;
+  @State dailyCard: TarotCard | null = null;
+
+  aboutToAppear() {
+    this.checkDailyCard();
+  }
+
+  checkDailyCard() {
+    const today = new Date().toDateString();
+    if (this.dailyCardDate === today && this.dailyCardId !== -1) {
+      // 今天已经抽过牌
+      this.dailyCard = TAROT_CARDS.find(card => card.id === this.dailyCardId) || null;
+    } else {
+      // 新的一天，重置
+      if (this.dailyCardDate !== today) {
+        this.dailyCardDate = '';
+        this.dailyCardId = -1;
+        this.dailyCard = null;
+      }
+    }
+  }
+
+  drawDailyCard() {
+    // 随机抽取一张牌
+    const randomIndex = Math.floor(Math.random() * TAROT_CARDS.length);
+    const card = TAROT_CARDS[randomIndex];
+    
+    // 保存结果
+    this.dailyCardId = card.id;
+    this.dailyCardDate = new Date().toDateString();
+    this.dailyCard = card;
+  }
 
   /**
    * 开始占卜
@@ -108,6 +145,11 @@ struct Index {
             .fontColor($r('app.color.text_primary'))
             .margin({ top: 40, bottom: 30 })
             .opacity(0.95)
+
+          // 每日运势卡片
+          if (!this.hasStartedReading) {
+            this.buildDailyTarotSection()
+          }
 
           if (!this.hasStartedReading) {
             // 问题输入和牌阵选择界面
@@ -516,5 +558,81 @@ struct Index {
         this.handleCardFlip(card.card.id);
       })
     })
+  }
+
+  /**
+   * 构建每日运势区域
+   */
+  @Builder
+  buildDailyTarotSection() {
+    Column() {
+      Text('每日运势')
+        .fontSize(20)
+        .fontWeight(FontWeight.Bold)
+        .fontColor($r('app.color.text_primary'))
+        .margin({ bottom: 16 })
+        .width('100%')
+        .textAlign(TextAlign.Start)
+
+      if (this.dailyCard) {
+        // 已抽牌展示
+        Row() {
+          Image(this.dailyCard.image)
+            .width(60)
+            .height(96)
+            .borderRadius(8)
+            .margin({ right: 16 })
+
+          Column() {
+            Text('今日指引：' + this.dailyCard.name)
+              .fontSize(16)
+              .fontWeight(FontWeight.Medium)
+              .fontColor($r('app.color.text_primary'))
+              .margin({ bottom: 8 })
+            
+            Text(this.dailyCard.description)
+              .fontSize(14)
+              .fontColor($r('app.color.text_secondary'))
+              .maxLines(2)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+          }
+          .layoutWeight(1)
+          .alignItems(HorizontalAlign.Start)
+          
+          // 跳转详情箭头
+          Text('>')
+            .fontSize(20)
+            .fontColor($r('app.color.text_hint'))
+            .margin({ left: 8 })
+        }
+        .width('100%')
+        .padding(16)
+        .backgroundColor($r('app.color.background_secondary'))
+        .borderRadius(16)
+        .onClick(() => {
+          router.pushUrl({
+            url: 'pages/ResultPage',
+            params: {
+              cardId: this.dailyCard?.id
+            }
+          });
+        })
+      } else {
+        // 未抽牌展示
+        Button('抽取今日运势牌')
+          .type(ButtonType.Normal)
+          .backgroundColor($r('app.color.button_secondary')) // 使用次级按钮颜色以区别于开始占卜
+          .fontColor($r('app.color.text_primary'))
+          .fontSize(16)
+          .width('100%')
+          .height(60)
+          .borderRadius(16)
+          .onClick(() => {
+            this.drawDailyCard();
+          })
+      }
+    }
+    .width('100%')
+    .margin({ bottom: 30 })
   }
 }
