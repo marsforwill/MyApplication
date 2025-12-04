@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/ResultPage",
-    "pages/CardLibrary"
+    "pages/CardLibrary",
+    "pages/BaZiPage"
   ]
 }

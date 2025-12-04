@@ -279,6 +279,22 @@ struct Index {
           });
         })
 
+      // 八字分析按钮
+      Button('八字分析')
+        .type(ButtonType.Normal)
+        .backgroundColor($r('app.color.button_secondary'))
+        .fontColor($r('app.color.text_primary'))
+        .fontSize(14)
+        .width('100%')
+        .height(44)
+        .borderRadius(22)
+        .margin({ bottom: 8 })
+        .onClick(() => {
+          router.pushUrl({
+            url: 'pages/BaZiPage'
+          });
+        })
+
       // 开始占卜按钮
       Button($r('app.string.start_reading'))
         .type(ButtonType.Normal)
