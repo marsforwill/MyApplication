@@ -446,7 +446,7 @@ struct Index {
   @Builder
   buildThreeCardItem(card: DrawnCard) {
     Column() {
-      this.buildFlipCard(card, 110, 176, 12, false, this.isCardFlipped(card.card.id))
+      this.buildFlipCard(card, 100, 160, 12, false, this.isCardFlipped(card.card.id))
 
       if (this.showCardInfo && this.isCardFlipped(card.card.id)) {
         Text(card.positionLabel || '')
@@ -463,8 +463,8 @@ struct Index {
           .textOverflow({ overflow: TextOverflow.Ellipsis })
       }
     }
-    .width(110)
-    .margin({ left: 8, right: 8 })
+    .width(100)
+    .margin({ left: 4, right: 4 })
   }
 
   /**

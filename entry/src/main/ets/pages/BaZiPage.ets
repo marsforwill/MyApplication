@@ -1,11 +1,11 @@
-import { BaZiUtils } from '../utils/BaZiUtils';
+import { BaZiUtils, BaZiResult } from '../utils/BaZiUtils';
 import router from '@ohos.router';
 
 @Entry
 @Component
 struct BaZiPage {
   @State selectedDate: Date = new Date();
-  @State result: string[] = ['', '', '', ''];
+  @State result: BaZiResult | null = null;
   @State analyzed: boolean = false;
 
   build() {
@@ -65,59 +65,124 @@ struct BaZiPage {
 
               Grid() {
                 GridItem() {
-                  Column() {
-                    Text('年柱')
-                      .fontSize(14)
-                      .fontColor(Color.Gray)
-                    Text(this.result[0])
-                      .fontSize(24)
-                      .fontWeight(FontWeight.Bold)
-                      .margin({ top: 5 })
-                  }
+                  this.buildPillar('年柱', this.result!.pillars[0])
                 }
 
                 GridItem() {
-                  Column() {
-                    Text('月柱')
-                      .fontSize(14)
-                      .fontColor(Color.Gray)
-                    Text(this.result[1])
-                      .fontSize(24)
-                      .fontWeight(FontWeight.Bold)
-                      .margin({ top: 5 })
-                  }
+                  this.buildPillar('月柱', this.result!.pillars[1])
                 }
 
                 GridItem() {
-                  Column() {
-                    Text('日柱')
-                      .fontSize(14)
-                      .fontColor(Color.Gray)
-                    Text(this.result[2])
-                      .fontSize(24)
-                      .fontWeight(FontWeight.Bold)
-                      .margin({ top: 5 })
-                  }
+                  this.buildPillar('日柱', this.result!.pillars[2])
                 }
 
                 GridItem() {
-                  Column() {
-                    Text('时柱')
-                      .fontSize(14)
-                      .fontColor(Color.Gray)
-                    Text(this.result[3])
-                      .fontSize(24)
-                      .fontWeight(FontWeight.Bold)
-                      .margin({ top: 5 })
-                  }
+                  this.buildPillar('时柱', this.result!.pillars[3])
                 }
               }
               .columnsTemplate('1fr 1fr 1fr 1fr')
               .width('100%')
-              .height(100)
+              .height(120)
               .backgroundColor('#FFF8E1')
               .borderRadius(10)
               .padding(10)
+
+              // Five Elements Summary
+              Column() {
+                Text('五行统计')
+                  .fontSize(16)
+                  .fontWeight(FontWeight.Bold)
+                  .margin({ top: 20, bottom: 10 })
+                  .width('100%')
+                
+                Flex({ wrap: FlexWrap.Wrap }) {
+                  this.buildElementCount('金', this.result!.elementCounts.get('金') || 0)
+                  this.buildElementCount('木', this.result!.elementCounts.get('木') || 0)
+                  this.buildElementCount('水', this.result!.elementCounts.get('水') || 0)
+                  this.buildElementCount('火', this.result!.elementCounts.get('火') || 0)
+                  this.buildElementCount('土', this.result!.elementCounts.get('土') || 0)
+                }
+              }
+              .width('100%')
+
+              // Analysis
+              Column() {
+                Text('日元分析')
+                  .fontSize(16)
+                  .fontWeight(FontWeight.Bold)
+                  .margin({ top: 20, bottom: 10 })
+                  .width('100%')
+                
+                Text(this.result!.dayMasterAnalysis)
+                  .fontSize(14)
+                  .lineHeight(20)
+                  .backgroundColor('#F0F0F0')
+                  .padding(10)
+                  .borderRadius(8)
+                  .width('100%')
+              }
+              .width('100%')
+
+              // Zodiac and Lucky Info
+              Column() {
+                Text('趣味运势')
+                  .fontSize(16)
+                  .fontWeight(FontWeight.Bold)
+                  .margin({ top: 20, bottom: 10 })
+                  .width('100%')
+                
+                Row() {
+                  Column() {
+                    Text('星座')
+                      .fontSize(12)
+                      .fontColor(Color.Gray)
+                    Text(this.result!.zodiac)
+                      .fontSize(18)
+                      .fontWeight(FontWeight.Bold)
+                      .margin({ top: 4 })
+                  }
+                  .layoutWeight(1)
+                  .alignItems(HorizontalAlign.Center)
+                  .backgroundColor('#F0F0F0')
+                  .padding(10)
+                  .borderRadius(8)
+                  .margin({ right: 8 })
+
+                  Column() {
+                    Text('幸运色')
+                      .fontSize(12)
+                      .fontColor(Color.Gray)
+                    Text(this.result!.luckyColor)
+                      .fontSize(18)
+                      .fontWeight(FontWeight.Bold)
+                      .fontColor(this.getLuckyColorValue(this.result!.luckyColor))
+                      .margin({ top: 4 })
+                  }
+                  .layoutWeight(1)
+                  .alignItems(HorizontalAlign.Center)
+                  .backgroundColor('#F0F0F0')
+                  .padding(10)
+                  .borderRadius(8)
+                  .margin({ right: 8 })
+
+                  Column() {
+                    Text('幸运数字')
+                      .fontSize(12)
+                      .fontColor(Color.Gray)
+                    Text(this.result!.luckyNumber.toString())
+                      .fontSize(18)
+                      .fontWeight(FontWeight.Bold)
+                      .margin({ top: 4 })
+                  }
+                  .layoutWeight(1)
+                  .alignItems(HorizontalAlign.Center)
+                  .backgroundColor('#F0F0F0')
+                  .padding(10)
+                  .borderRadius(8)
+                }
+                .width('100%')
+              }
+              .width('100%')
             }
             .width('100%')
             .padding(16)
@@ -129,5 +194,80 @@ struct BaZiPage {
     }
     .width('100%')
     .height('100%')
+  }
+
+  @Builder
+  buildPillar(title: string, pillar: string) {
+    Column() {
+      Text(title)
+        .fontSize(14)
+        .fontColor(Color.Gray)
+      
+      Row() {
+        Column() {
+          Text(pillar.charAt(0))
+            .fontSize(24)
+            .fontWeight(FontWeight.Bold)
+          Text(BaZiUtils.getElement(pillar.charAt(0)))
+            .fontSize(10)
+            .fontColor(this.getElementColor(BaZiUtils.getElement(pillar.charAt(0))))
+        }
+        .margin({ right: 4 })
+
+        Column() {
+          Text(pillar.charAt(1))
+            .fontSize(24)
+            .fontWeight(FontWeight.Bold)
+          Text(BaZiUtils.getElement(pillar.charAt(1)))
+            .fontSize(10)
+            .fontColor(this.getElementColor(BaZiUtils.getElement(pillar.charAt(1))))
+        }
+      }
+      .margin({ top: 5 })
+    }
+  }
+
+  @Builder
+  buildElementCount(element: string, count: number) {
+    Row() {
+      Text(element + ': ')
+        .fontSize(14)
+        .fontColor(this.getElementColor(element))
+      Text(count.toString())
+        .fontSize(14)
+        .fontWeight(FontWeight.Bold)
+    }
+    .margin({ right: 16, bottom: 8 })
+    .padding({ top: 4, bottom: 4, left: 8, right: 8 })
+    .backgroundColor('#FFFFFF')
+    .borderRadius(12)
+    .border({ width: 1, color: '#E0E0E0' })
+  }
+
+  getElementColor(element: string): string {
+    switch (element) {
+      case '金': return '#FFD700'; // Gold
+      case '木': return '#228B22'; // Forest Green
+      case '水': return '#1E90FF'; // Dodger Blue
+      case '火': return '#FF4500'; // Orange Red
+      case '土': return '#8B4513'; // Saddle Brown
+      default: return '#000000';
+    }
+  }
+
+  getLuckyColorValue(colorName: string): string {
+    switch (colorName) {
+      case '红色': return '#FF0000';
+      case '橙色': return '#FFA500';
+      case '黄色': return '#FFD700';
+      case '绿色': return '#008000';
+      case '青色': return '#00FFFF';
+      case '蓝色': return '#0000FF';
+      case '紫色': return '#800080';
+      case '粉色': return '#FFC0CB';
+      case '白色': return '#000000'; // Use black for text visibility on white bg, or gray
+      case '金色': return '#FFD700';
+      default: return '#000000';
+    }
   }
 }

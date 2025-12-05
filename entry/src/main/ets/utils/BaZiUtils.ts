@@ -214,12 +214,122 @@ export class BaZiUtils {
     return this.HEAVENLY_STEMS[stemIndex] + this.EARTHLY_BRANCHES[branchIndex];
   }
 
-  static analyze(date: Date): string[] {
+  private static readonly FIVE_ELEMENTS = {
+    '甲': '木', '乙': '木',
+    '丙': '火', '丁': '火',
+    '戊': '土', '己': '土',
+    '庚': '金', '辛': '金',
+    '壬': '水', '癸': '水',
+    '子': '水', '丑': '土',
+    '寅': '木', '卯': '木',
+    '辰': '土', '巳': '火',
+    '午': '火', '未': '土',
+    '申': '金', '酉': '金',
+    '戌': '土', '亥': '水'
+  };
+
+  private static readonly DAY_MASTER_DESC = {
+    '甲': '甲木日元：正直仁慈，进取心强，如大树般稳重。',
+    '乙': '乙木日元：温柔含蓄，适应力强，如花草般柔韧。',
+    '丙': '丙火日元：热情豪爽，积极乐观，如太阳般温暖。',
+    '丁': '丁火日元：细腻温和，富有同情心，如烛火般照亮他人。',
+    '戊': '戊土日元：诚实厚重，沉稳踏实，如高山般可靠。',
+    '己': '己土日元：包容涵养，多才多艺，如田园般滋养万物。',
+    '庚': '庚金日元：刚毅果断，讲义气，如刀剑般锋利。',
+    '辛': '辛金日元：温润秀气，重感情，如珠宝般珍贵。',
+    '壬': '壬水日元：聪明机智，宽宏大度，如江河般奔流不息。',
+    '癸': '癸水日元：平静柔和，内敛深沉，如雨露般润泽万物。'
+  };
+
+  static getElement(char: string): string {
+    return (this.FIVE_ELEMENTS as Record<string, string>)[char] || '';
+  }
+
+  static getFiveElementsStructure(pillars: string[]): Map<string, number> {
+    const counts = new Map<string, number>();
+    counts.set('金', 0);
+    counts.set('木', 0);
+    counts.set('水', 0);
+    counts.set('火', 0);
+    counts.set('土', 0);
+
+    pillars.forEach(pillar => {
+      const stem = pillar.charAt(0);
+      const branch = pillar.charAt(1);
+
+      const stemElement = this.getElement(stem);
+      const branchElement = this.getElement(branch);
+
+      if (stemElement) counts.set(stemElement, (counts.get(stemElement) || 0) + 1);
+      if (branchElement) counts.set(branchElement, (counts.get(branchElement) || 0) + 1);
+    });
+
+    return counts;
+  }
+
+  static getDayMasterAnalysis(dayPillar: string): string {
+    const dayStem = dayPillar.charAt(0);
+    return (this.DAY_MASTER_DESC as Record<string, string>)[dayStem] || '未知日元';
+  }
+
+  static getWesternZodiac(date: Date): string {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "水瓶座";
+    if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "双鱼座";
+    if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "白羊座";
+    if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "金牛座";
+    if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) return "双子座";
+    if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) return "巨蟹座";
+    if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "狮子座";
+    if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "处女座";
+    if ((month == 9 && day >= 23) || (month == 10 && day <= 23)) return "天秤座";
+    if ((month == 10 && day >= 24) || (month == 11 && day <= 22)) return "天蝎座";
+    if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) return "射手座";
+    return "摩羯座";
+  }
+
+  static getLuckyInfo(date: Date): { color: string, number: number } {
+    // Simple deterministic hash based on date
+    const hash = date.getDate() + date.getMonth() + date.getFullYear();
+
+    const colors = ['红色', '橙色', '黄色', '绿色', '青色', '蓝色', '紫色', '粉色', '白色', '金色'];
+    const color = colors[hash % colors.length];
+    const number = (hash % 9) + 1; // 1-9
+
+    return { color, number };
+  }
+
+  static analyze(date: Date): BaZiResult {
     const yearPillar = this.getYearPillar(date);
     const monthPillar = this.getMonthPillar(date, yearPillar);
     const dayPillar = this.getDayPillar(date);
     const hourPillar = this.getHourPillar(date, dayPillar);
 
-    return [yearPillar, monthPillar, dayPillar, hourPillar];
+    const pillars = [yearPillar, monthPillar, dayPillar, hourPillar];
+    const elementCounts = this.getFiveElementsStructure(pillars);
+    const dayMasterAnalysis = this.getDayMasterAnalysis(dayPillar);
+
+    const zodiac = this.getWesternZodiac(date);
+    const luckyInfo = this.getLuckyInfo(date);
+
+    return {
+      pillars,
+      elementCounts,
+      dayMasterAnalysis,
+      zodiac,
+      luckyColor: luckyInfo.color,
+      luckyNumber: luckyInfo.number
+    };
   }
+}
+
+export interface BaZiResult {
+  pillars: string[];
+  elementCounts: Map<string, number>;
+  dayMasterAnalysis: string;
+  zodiac: string;
+  luckyColor: string;
+  luckyNumber: number;
 }
