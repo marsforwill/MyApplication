@@ -199,36 +199,39 @@ struct ResultPage {
       this.buildThreeCardItem(cards[2])
     }
     .width('100%')
-    .justifyContent(FlexAlign.Center)
+    .justifyContent(FlexAlign.SpaceEvenly)
+    .padding({ left: 10, right: 10 })
   }
 
   @Builder
   buildThreeCardItem(card: DrawnCard) {
     Column() {
       Image(card.card.image)
-        .width(110)
-        .height(176)
-        .borderRadius(12)
+        .width(90)
+        .height(144)
+        .borderRadius(10)
         .opacity(this.showContent ? 1 : 0)
         .transition(TransitionEffect.OPACITY.animation({ duration: 400, curve: Curve.EaseInOut }))
 
       if (this.showContent) {
         Text(card.positionLabel || '')
-          .fontSize(12)
+          .fontSize(11)
           .fontColor($r('app.color.text_hint'))
-          .margin({ top: 8 })
+          .margin({ top: 6 })
+          .width('100%')
+          .textAlign(TextAlign.Center)
         Text(card.card.name)
-          .fontSize(14)
+          .fontSize(13)
           .fontWeight(FontWeight.Medium)
           .fontColor($r('app.color.text_primary'))
-          .margin({ top: 4 })
+          .margin({ top: 3 })
           .textAlign(TextAlign.Center)
           .maxLines(2)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
+          .width('100%')
       }
     }
-    .width(110)
-    .margin({ left: 8, right: 8 })
+    .width(90)
   }
 
   /**

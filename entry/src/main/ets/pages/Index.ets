@@ -170,6 +170,40 @@ struct Index {
   }
 
   /**
+   * 构建功能按钮
+   */
+  @Builder
+  buildFeatureButton(icon: string, title: string, url: string) {
+    Column() {
+      Text(icon)
+        .fontSize(32)
+        .margin({ bottom: 4 })
+
+      Text(title)
+        .fontSize(12)
+        .fontColor($r('app.color.text_secondary'))
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor($r('app.color.background_secondary'))
+    .borderRadius(12)
+    .justifyContent(FlexAlign.Center)
+    .onClick(() => {
+      router.pushUrl({ url: url });
+    })
+    .shadow({
+      radius: 8,
+      color: 'rgba(0,0,0,0.08)',
+      offsetX: 0,
+      offsetY: 2
+    })
+    .animation({
+      duration: 200,
+      curve: Curve.Sharp
+    })
+  }
+
+  /**
    * 构建问题输入和牌阵选择界面
    */
   @Builder
@@ -263,37 +297,37 @@ struct Index {
       .width('100%')
       .margin({ bottom: 30 })
 
-      // 查看所有塔罗牌按钮
-      Button($r('app.string.goto_card_library'))
-        .type(ButtonType.Normal)
-        .backgroundColor($r('app.color.button_secondary'))
-        .fontColor($r('app.color.text_primary'))
-        .fontSize(14)
-        .width('100%')
-        .height(44)
-        .borderRadius(22)
-        .margin({ top: 4, bottom: 8 })
-        .onClick(() => {
-          router.pushUrl({
-            url: 'pages/CardLibrary'
-          });
-        })
+      // 功能入口区域 - 网格布局
+      Column() {
+        Text('更多功能')
+          .fontSize(14)
+          .fontColor($r('app.color.text_hint'))
+          .margin({ bottom: 12 })
+          .width('100%')
+          .textAlign(TextAlign.Start)
 
-      // 八字分析按钮
-      Button('八字分析')
-        .type(ButtonType.Normal)
-        .backgroundColor($r('app.color.button_secondary'))
-        .fontColor($r('app.color.text_primary'))
-        .fontSize(14)
+        // 功能按钮网格
+        Grid() {
+          GridItem() {
+            this.buildFeatureButton('🔮', '塔罗牌库', 'pages/CardLibrary')
+          }
+
+          GridItem() {
+            this.buildFeatureButton('🙏', '观音灵签', 'pages/LotteryPage')
+          }
+
+          GridItem() {
+            this.buildFeatureButton('☯️', '八字分析', 'pages/BaZiPage')
+          }
+        }
+        .columnsTemplate('1fr 1fr 1fr')
+        .rowsGap(12)
+        .columnsGap(12)
         .width('100%')
-        .height(44)
-        .borderRadius(22)
-        .margin({ bottom: 8 })
-        .onClick(() => {
-          router.pushUrl({
-            url: 'pages/BaZiPage'
-          });
-        })
+        .height(100)
+      }
+      .width('100%')
+      .margin({ bottom: 20 })
 
       // 开始占卜按钮
       Button($r('app.string.start_reading'))
@@ -303,10 +337,21 @@ struct Index {
         .fontSize(18)
         .fontWeight(FontWeight.Bold)
         .width('100%')
-        .height(50)
-        .borderRadius(25)
+        .height(56)
+        .borderRadius(28)
         .enabled(this.userQuestion.trim().length > 0 && this.selectedSpread !== null)
         .opacity((this.userQuestion.trim().length > 0 && this.selectedSpread !== null) ? 1 : 0.5)
+        .shadow((this.userQuestion.trim().length > 0 && this.selectedSpread !== null) ? {
+          radius: 20,
+          color: 'rgba(107, 70, 193, 0.4)',
+          offsetX: 0,
+          offsetY: 8
+        } : {
+          radius: 0,
+          color: Color.Transparent,
+          offsetX: 0,
+          offsetY: 0
+        })
         .onClick(() => {
           this.startReading();
         })
@@ -439,32 +484,33 @@ struct Index {
       this.buildThreeCardItem(cards[2])
     }
     .width('100%')
-    .justifyContent(FlexAlign.Center)
+    .justifyContent(FlexAlign.SpaceEvenly)
+    .padding({ left: 10, right: 10 })
     .margin({ bottom: 20 })
   }
 
   @Builder
   buildThreeCardItem(card: DrawnCard) {
     Column() {
-      this.buildFlipCard(card, 100, 160, 12, false, this.isCardFlipped(card.card.id))
+      this.buildFlipCard(card, 85, 136, 10, false, this.isCardFlipped(card.card.id))
 
       if (this.showCardInfo && this.isCardFlipped(card.card.id)) {
         Text(card.positionLabel || '')
-          .fontSize(12)
+          .fontSize(11)
           .fontColor($r('app.color.text_hint'))
-          .margin({ top: 8 })
+          .margin({ top: 6 })
         Text(card.card.name)
-          .fontSize(14)
+          .fontSize(13)
           .fontWeight(FontWeight.Medium)
           .fontColor($r('app.color.text_primary'))
-          .margin({ top: 4 })
+          .margin({ top: 3 })
           .textAlign(TextAlign.Center)
           .maxLines(2)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
+          .width('100%')
       }
     }
-    .width(100)
-    .margin({ left: 4, right: 4 })
+    .width(85)
   }
 
   /**
@@ -582,34 +628,48 @@ struct Index {
   @Builder
   buildDailyTarotSection() {
     Column() {
-      Text('每日运势')
-        .fontSize(20)
-        .fontWeight(FontWeight.Bold)
-        .fontColor($r('app.color.text_primary'))
-        .margin({ bottom: 16 })
-        .width('100%')
-        .textAlign(TextAlign.Start)
+      Row() {
+        Text('🌟 每日运势')
+          .fontSize(18)
+          .fontWeight(FontWeight.Bold)
+          .fontColor($r('app.color.text_primary'))
+        
+        Blank()
+        
+        Text(new Date().toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' }))
+          .fontSize(12)
+          .fontColor($r('app.color.text_hint'))
+      }
+      .width('100%')
+      .margin({ bottom: 12 })
 
       if (this.dailyCard) {
         // 已抽牌展示
         Row() {
           Image(this.dailyCard.image)
-            .width(60)
-            .height(96)
+            .width(70)
+            .height(112)
             .borderRadius(8)
             .margin({ right: 16 })
+            .shadow({
+              radius: 12,
+              color: 'rgba(0,0,0,0.15)',
+              offsetX: 0,
+              offsetY: 4
+            })
 
           Column() {
-            Text('今日指引：' + this.dailyCard.name)
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
+            Text(this.dailyCard.name)
+              .fontSize(17)
+              .fontWeight(FontWeight.Bold)
               .fontColor($r('app.color.text_primary'))
-              .margin({ bottom: 8 })
+              .margin({ bottom: 6 })
             
             Text(this.dailyCard.description)
-              .fontSize(14)
+              .fontSize(13)
               .fontColor($r('app.color.text_secondary'))
-              .maxLines(2)
+              .lineHeight(20)
+              .maxLines(3)
               .textOverflow({ overflow: TextOverflow.Ellipsis })
           }
           .layoutWeight(1)
@@ -625,6 +685,12 @@ struct Index {
         .padding(16)
         .backgroundColor($r('app.color.background_secondary'))
         .borderRadius(16)
+        .shadow({
+          radius: 15,
+          color: 'rgba(0,0,0,0.08)',
+          offsetX: 0,
+          offsetY: 4
+        })
         .onClick(() => {
           router.pushUrl({
             url: 'pages/ResultPage',
@@ -635,17 +701,38 @@ struct Index {
         })
       } else {
         // 未抽牌展示
-        Button('抽取今日运势牌')
-          .type(ButtonType.Normal)
-          .backgroundColor($r('app.color.button_secondary')) // 使用次级按钮颜色以区别于开始占卜
-          .fontColor($r('app.color.text_primary'))
-          .fontSize(16)
-          .width('100%')
-          .height(60)
-          .borderRadius(16)
-          .onClick(() => {
-            this.drawDailyCard();
-          })
+        Column() {
+          Text('✨')
+            .fontSize(40)
+            .margin({ bottom: 8 })
+          
+          Text('今天还没有抽取运势牌')
+            .fontSize(14)
+            .fontColor($r('app.color.text_secondary'))
+            .margin({ bottom: 16 })
+          
+          Button('🎴 抽取今日运势')
+            .type(ButtonType.Normal)
+            .backgroundColor($r('app.color.button_primary'))
+            .fontColor(Color.White)
+            .fontSize(15)
+            .height(44)
+            .borderRadius(22)
+            .onClick(() => {
+              this.drawDailyCard();
+            })
+        }
+        .width('100%')
+        .padding(24)
+        .backgroundColor($r('app.color.background_secondary'))
+        .borderRadius(16)
+        .justifyContent(FlexAlign.Center)
+        .shadow({
+          radius: 15,
+          color: 'rgba(0,0,0,0.08)',
+          offsetX: 0,
+          offsetY: 4
+        })
       }
     }
     .width('100%')

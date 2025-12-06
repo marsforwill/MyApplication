@@ -3,6 +3,8 @@
     "pages/Index",
     "pages/ResultPage",
     "pages/CardLibrary",
-    "pages/BaZiPage"
+    "pages/BaZiPage",
+    "pages/LotteryPage",
+    "pages/LotteryDetailPage"
   ]
 }
