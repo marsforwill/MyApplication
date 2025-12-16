@@ -1,0 +1,26 @@
+# 确保图片文件作为二进制文件处理
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.ico binary
+*.webp binary
+
+# 确保字体文件作为二进制文件处理
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+# 确保音频/视频文件作为二进制文件处理
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+*.ogg binary
+*.avi binary
+
+# 确保应用包文件作为二进制文件处理
+*.app binary
+*.hap binary
+*.apk binary
