@@ -1,4 +1,5 @@
 import { router } from '@kit.ArkUI';
+import { vibrator } from '@kit.SensorServiceKit';
 import { TarotCard, TAROT_CARDS, ReadingResult, SpreadType, DrawnCard } from '../models/TarotCard';
 
 /**
@@ -39,6 +40,16 @@ struct ResultPage {
    * 返回首页
    */
   goBack() {
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 30
+      }, {
+        usage: 'touch'
+      });
+    } catch (error) {
+      console.error('Vibration error:', error);
+    }
     router.back();
   }
 

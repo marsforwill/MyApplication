@@ -1,5 +1,7 @@
 import { BaZiUtils, BaZiResult } from '../utils/BaZiUtils';
 import router from '@ohos.router';
+import { vibrator } from '@kit.SensorServiceKit';
+import { promptAction } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -12,6 +14,15 @@ struct BaZiPage {
     Column() {
       // Header
       Row() {
+        Text('←')
+          .fontSize(24)
+          .fontColor($r('app.color.text_primary'))
+          .fontWeight(FontWeight.Bold)
+          .margin({ right: 12 })
+          .onClick(() => {
+            router.back();
+          })
+        
         Text('八字分析')
           .fontSize(20)
           .fontWeight(FontWeight.Bold)
@@ -47,13 +58,34 @@ struct BaZiPage {
             .height(150)
             .margin({ top: 10 })
 
-          Button('开始分析')
+          Button('🔮 开始分析')
             .width('80%')
             .height(50)
             .margin({ top: 30 })
+            .type(ButtonType.Normal)
+            .backgroundColor($r('app.color.button_primary'))
+            .fontColor(Color.White)
+            .fontSize(16)
+            .borderRadius(25)
             .onClick(() => {
+              try {
+                vibrator.startVibration({
+                  type: 'time',
+                  duration: 50
+                }, {
+                  usage: 'touch'
+                });
+              } catch (error) {
+                console.error('Vibration error:', error);
+              }
+              
               this.result = BaZiUtils.analyze(this.selectedDate);
               this.analyzed = true;
+              
+              promptAction.showToast({
+                message: '✨ 分析完成',
+                duration: 1500
+              });
             })
 
           if (this.analyzed) {

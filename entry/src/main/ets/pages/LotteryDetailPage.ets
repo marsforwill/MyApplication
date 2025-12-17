@@ -1,4 +1,5 @@
 import { router } from '@kit.ArkUI';
+import { vibrator } from '@kit.SensorServiceKit';
 import { LotteryStick, getLevelText, getLevelColor } from '../models/LotteryStick';
 
 /**
@@ -29,10 +30,20 @@ struct LotteryDetailPage {
           .fontColor($r('app.color.text_primary'))
           .fontWeight(FontWeight.Bold)
           .onClick(() => {
+            try {
+              vibrator.startVibration({
+                type: 'time',
+                duration: 30
+              }, {
+                usage: 'touch'
+              });
+            } catch (error) {
+              console.error('Vibration error:', error);
+            }
             router.back();
           })
 
-        Text('签文详解')
+        Text('📜 签文详解')
           .fontSize(20)
           .fontWeight(FontWeight.Bold)
           .fontColor($r('app.color.text_primary'))

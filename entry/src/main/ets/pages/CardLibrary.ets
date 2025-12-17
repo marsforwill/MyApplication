@@ -1,4 +1,5 @@
 import { router } from '@kit.ArkUI';
+import { vibrator } from '@kit.SensorServiceKit';
 import { TarotCard, TAROT_CARDS } from '../models/TarotCard';
 
 @Entry
@@ -110,14 +111,33 @@ struct CardLibrary {
 
       Blank()
 
-      Image($r('app.media.foreground'))
-        .width(16)
-        .height(16)
-        .opacity(0.0) // 只作为占位，可替换为箭头图标
+      Text('>')
+        .fontSize(20)
+        .fontColor($r('app.color.text_hint'))
+        .margin({ left: 8 })
     }
     .width('100%')
-    .padding({ top: 10, bottom: 10 })
+    .padding(16)
+    .backgroundColor($r('app.color.background_secondary'))
+    .borderRadius(12)
+    .margin({ bottom: 12 })
+    .shadow({
+      radius: 8,
+      color: 'rgba(0,0,0,0.06)',
+      offsetX: 0,
+      offsetY: 2
+    })
     .onClick(() => {
+      try {
+        vibrator.startVibration({
+          type: 'time',
+          duration: 30
+        }, {
+          usage: 'touch'
+        });
+      } catch (error) {
+        console.error('Vibration error:', error);
+      }
       router.pushUrl({
         url: 'pages/ResultPage',
         params: {

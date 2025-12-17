@@ -1,4 +1,5 @@
-import { router } from '@kit.ArkUI';
+import { router, promptAction } from '@kit.ArkUI';
+import { vibrator } from '@kit.SensorServiceKit';
 import {
   SpreadType,
   ReadingResult,
@@ -55,6 +56,18 @@ struct Index {
   }
 
   drawDailyCard() {
+    // 震动反馈
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 100
+      }, {
+        usage: 'alarm'
+      });
+    } catch (error) {
+      console.error('Vibration error:', error);
+    }
+    
     // 随机抽取一张牌
     const randomIndex = Math.floor(Math.random() * TAROT_CARDS.length);
     const card = TAROT_CARDS[randomIndex];
@@ -63,6 +76,12 @@ struct Index {
     this.dailyCardId = card.id;
     this.dailyCardDate = new Date().toDateString();
     this.dailyCard = card;
+    
+    // 成功提示
+    promptAction.showToast({
+      message: '✨ 今日运势已抽取',
+      duration: 1500
+    });
   }
 
   /**
@@ -71,12 +90,30 @@ struct Index {
   startReading() {
     // 验证输入
     if (!this.userQuestion.trim()) {
-      // 可以添加提示
+      promptAction.showToast({
+        message: '请先输入您的问题',
+        duration: 2000
+      });
       return;
     }
     if (!this.selectedSpread) {
-      // 可以添加提示
+      promptAction.showToast({
+        message: '请选择一种牌阵',
+        duration: 2000
+      });
       return;
+    }
+    
+    // 震动反馈
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 50
+      }, {
+        usage: 'touch'
+      });
+    } catch (error) {
+      console.error('Vibration error:', error);
     }
 
     // 重置状态
@@ -119,6 +156,19 @@ struct Index {
     if (this.flippedCardIds.includes(cardId)) {
       return;
     }
+    
+    // 卡片翻转震动反馈
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 30
+      }, {
+        usage: 'touch'
+      });
+    } catch (error) {
+      console.error('Vibration error:', error);
+    }
+    
     this.flippedCardIds = [...this.flippedCardIds, cardId];
   }
 
@@ -182,6 +232,7 @@ struct Index {
       Text(title)
         .fontSize(12)
         .fontColor($r('app.color.text_secondary'))
+        .fontWeight(FontWeight.Medium)
     }
     .width('100%')
     .height('100%')
@@ -189,6 +240,16 @@ struct Index {
     .borderRadius(12)
     .justifyContent(FlexAlign.Center)
     .onClick(() => {
+      try {
+        vibrator.startVibration({
+          type: 'time',
+          duration: 35
+        }, {
+          usage: 'touch'
+        });
+      } catch (error) {
+        console.error('Vibration error:', error);
+      }
       router.pushUrl({ url: url });
     })
     .shadow({
@@ -197,9 +258,17 @@ struct Index {
       offsetX: 0,
       offsetY: 2
     })
+    .stateStyles({
+      normal: {
+        .scale({ x: 1, y: 1 })
+      },
+      pressed: {
+        .scale({ x: 0.95, y: 0.95 })
+      }
+    })
     .animation({
-      duration: 200,
-      curve: Curve.Sharp
+      duration: 150,
+      curve: Curve.FastOutSlowIn
     })
   }
 
@@ -246,6 +315,10 @@ struct Index {
 
         // 单张牌选项
         Row() {
+          Text(this.selectedSpread === SpreadType.SINGLE ? '✓ ' : '')
+            .fontSize(16)
+            .fontColor(Color.White)
+            .margin({ right: 4 })
           Text($r('app.string.spread_single'))
             .fontSize(16)
             .fontColor(this.selectedSpread === SpreadType.SINGLE ? Color.White : $r('app.color.text_primary'))
@@ -257,12 +330,38 @@ struct Index {
         .borderRadius(12)
         .justifyContent(FlexAlign.Center)
         .margin({ bottom: 12 })
+        .shadow(this.selectedSpread === SpreadType.SINGLE ? {
+          radius: 12,
+          color: 'rgba(107, 70, 193, 0.3)',
+          offsetX: 0,
+          offsetY: 4
+        } : {
+          radius: 0,
+          color: Color.Transparent,
+          offsetX: 0,
+          offsetY: 0
+        })
         .onClick(() => {
+          try {
+            vibrator.startVibration({
+              type: 'time',
+              duration: 35
+            }, {
+              usage: 'touch'
+            });
+          } catch (error) {
+            console.error('Vibration error:', error);
+          }
           this.selectedSpread = SpreadType.SINGLE;
         })
+        .animation({ duration: 200, curve: Curve.EaseInOut })
 
         // 三张牌选项
         Row() {
+          Text(this.selectedSpread === SpreadType.THREE ? '✓ ' : '')
+            .fontSize(16)
+            .fontColor(Color.White)
+            .margin({ right: 4 })
           Text($r('app.string.spread_three'))
             .fontSize(16)
             .fontColor(this.selectedSpread === SpreadType.THREE ? Color.White : $r('app.color.text_primary'))
@@ -274,12 +373,38 @@ struct Index {
         .borderRadius(12)
         .justifyContent(FlexAlign.Center)
         .margin({ bottom: 12 })
+        .shadow(this.selectedSpread === SpreadType.THREE ? {
+          radius: 12,
+          color: 'rgba(107, 70, 193, 0.3)',
+          offsetX: 0,
+          offsetY: 4
+        } : {
+          radius: 0,
+          color: Color.Transparent,
+          offsetX: 0,
+          offsetY: 0
+        })
         .onClick(() => {
+          try {
+            vibrator.startVibration({
+              type: 'time',
+              duration: 35
+            }, {
+              usage: 'touch'
+            });
+          } catch (error) {
+            console.error('Vibration error:', error);
+          }
           this.selectedSpread = SpreadType.THREE;
         })
+        .animation({ duration: 200, curve: Curve.EaseInOut })
 
         // 七张牌选项
         Row() {
+          Text(this.selectedSpread === SpreadType.SEVEN ? '✓ ' : '')
+            .fontSize(16)
+            .fontColor(Color.White)
+            .margin({ right: 4 })
           Text($r('app.string.spread_seven'))
             .fontSize(16)
             .fontColor(this.selectedSpread === SpreadType.SEVEN ? Color.White : $r('app.color.text_primary'))
@@ -290,9 +415,31 @@ struct Index {
           $r('app.color.background_secondary'))
         .borderRadius(12)
         .justifyContent(FlexAlign.Center)
+        .shadow(this.selectedSpread === SpreadType.SEVEN ? {
+          radius: 12,
+          color: 'rgba(107, 70, 193, 0.3)',
+          offsetX: 0,
+          offsetY: 4
+        } : {
+          radius: 0,
+          color: Color.Transparent,
+          offsetX: 0,
+          offsetY: 0
+        })
         .onClick(() => {
+          try {
+            vibrator.startVibration({
+              type: 'time',
+              duration: 35
+            }, {
+              usage: 'touch'
+            });
+          } catch (error) {
+            console.error('Vibration error:', error);
+          }
           this.selectedSpread = SpreadType.SEVEN;
         })
+        .animation({ duration: 200, curve: Curve.EaseInOut })
       }
       .width('100%')
       .margin({ bottom: 30 })
@@ -329,8 +476,17 @@ struct Index {
       .width('100%')
       .margin({ bottom: 20 })
 
+      // 辅助提示文本
+      if (this.userQuestion.trim().length === 0 || this.selectedSpread === null) {
+        Text(this.userQuestion.trim().length === 0 ? '💫 请先输入您的问题' : '✨ 请选择一个牌阵')
+          .fontSize(14)
+          .fontColor($r('app.color.text_hint'))
+          .margin({ bottom: 12 })
+          .opacity(0.8)
+      }
+
       // 开始占卜按钮
-      Button($r('app.string.start_reading'))
+      Button('🔮 开始占卜')
         .type(ButtonType.Normal)
         .backgroundColor($r('app.color.button_primary'))
         .fontColor(Color.White)
@@ -397,7 +553,7 @@ struct Index {
             })
             .opacity(1)
 
-          Button($r('app.string.draw_again'))
+          Button('🔄 重新抽牌')
             .type(ButtonType.Normal)
             .backgroundColor($r('app.color.button_secondary'))
             .fontColor($r('app.color.text_primary'))
@@ -407,6 +563,16 @@ struct Index {
             .width(160)
             .height(44)
             .onClick(() => {
+              try {
+                vibrator.startVibration({
+                  type: 'time',
+                  duration: 40
+                }, {
+                  usage: 'touch'
+                });
+              } catch (error) {
+                console.error('Vibration error:', error);
+              }
               this.resetReading();
             })
             .opacity(1)

@@ -1,4 +1,5 @@
-import { router } from '@kit.ArkUI';
+import { router, promptAction } from '@kit.ArkUI';
+import { vibrator } from '@kit.SensorServiceKit';
 import {
   LotteryStick,
   drawLotteryStick,
@@ -43,6 +44,18 @@ struct LotteryPage {
     this.showResult = false;
     this.showStick = false;
     this.stickOffset = 0;
+    
+    // 开始震动反馈
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 200
+      }, {
+        usage: 'alarm'
+      });
+    } catch (error) {
+      console.error('Vibration error:', error);
+    }
 
     // 摇动动画 - 增强效果
     let count = 0;
@@ -68,6 +81,18 @@ struct LotteryPage {
     this.shakeAngle = 0;
     this.tubeScale = 1;
     this.showStick = true;
+    
+    // 签条弹出震动
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 150
+      }, {
+        usage: 'notification'
+      });
+    } catch (error) {
+      console.error('Vibration error:', error);
+    }
     
     // 签条从签筒中弹出
     let offset = 0;
@@ -98,6 +123,17 @@ struct LotteryPage {
     // 延迟显示结果，增加悬念
     setTimeout(() => {
       this.showResult = true;
+      // 显示结果时震动
+      try {
+        vibrator.startVibration({
+          type: 'time',
+          duration: 80
+        }, {
+          usage: 'notification'
+        });
+      } catch (error) {
+        console.error('Vibration error:', error);
+      }
     }, 500);
   }
 
@@ -344,7 +380,7 @@ struct LotteryPage {
       // 操作按钮
       if (this.showResult) {
         Row() {
-          Button('查看详解')
+          Button('📖 查看详解')
             .type(ButtonType.Normal)
             .backgroundColor($r('app.color.button_primary'))
             .fontColor(Color.White)
@@ -354,10 +390,20 @@ struct LotteryPage {
             .borderRadius(24)
             .margin({ right: 10 })
             .onClick(() => {
+              try {
+                vibrator.startVibration({
+                  type: 'time',
+                  duration: 40
+                }, {
+                  usage: 'touch'
+                });
+              } catch (error) {
+                console.error('Vibration error:', error);
+              }
               this.viewDetail();
             })
 
-          Button('重新抽签')
+          Button('🔄 重新抽签')
             .type(ButtonType.Normal)
             .backgroundColor($r('app.color.background_secondary'))
             .fontColor($r('app.color.text_primary'))
@@ -367,6 +413,16 @@ struct LotteryPage {
             .borderRadius(24)
             .margin({ left: 10 })
             .onClick(() => {
+              try {
+                vibrator.startVibration({
+                  type: 'time',
+                  duration: 40
+                }, {
+                  usage: 'touch'
+                });
+              } catch (error) {
+                console.error('Vibration error:', error);
+              }
               this.resetDraw();
             })
         }
